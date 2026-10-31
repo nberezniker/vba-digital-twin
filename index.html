@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VBA Trade Group · Интерактивная Платформа Знаний и Цифровой Двойник</title>
+  <title>VBA Trade Group · Цифровая Модель Предприятия и Платформа Отчетов ГД</title>
   <script>
 /**
  * vis-network
@@ -66,19 +66,19 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
   </script>
   <style>
     :root {
-      --bg: #090d16;
-      --card: rgba(18, 24, 38, 0.85);
-      --card-hover: rgba(30, 41, 59, 0.95);
+      --bg: #0b0f19;
+      --card: rgba(17, 24, 39, 0.85);
+      --card-hover: rgba(31, 41, 55, 0.95);
       --border: rgba(255, 255, 255, 0.08);
-      --border-accent: rgba(56, 189, 248, 0.3);
+      --border-accent: rgba(56, 189, 248, 0.35);
       --accent: #38bdf8;
       --accent-glow: rgba(56, 189, 248, 0.25);
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
+      --text: #f9fafb;
+      --text-muted: #9ca3af;
       --success: #34d399;
       --warning: #fbbf24;
       --danger: #f87171;
-      --purple: #a855f7;
+      --purple: #c084fc;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -91,7 +91,7 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
     }
     /* Header */
     header {
-      background: rgba(15, 23, 42, 0.92);
+      background: rgba(15, 23, 42, 0.94);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
       padding: 12px 24px;
@@ -126,16 +126,17 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
       font-size: 11px;
       color: var(--text-muted);
     }
-    /* Top Badges */
+    /* Top KPI Strip */
     .header-badges {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      flex-wrap: wrap;
     }
     .h-badge {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border);
-      padding: 4px 10px;
+      padding: 5px 10px;
       border-radius: 6px;
       font-size: 11px;
       font-weight: 500;
@@ -150,23 +151,25 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
     /* Tab Navigation */
     .nav-tabs {
       display: flex;
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(15, 23, 42, 0.7);
       border-bottom: 1px solid var(--border);
       padding: 0 24px;
-      gap: 8px;
+      gap: 6px;
+      overflow-x: auto;
     }
     .tab-btn {
       background: transparent;
       border: none;
       border-bottom: 2px solid transparent;
       color: var(--text-muted);
-      padding: 14px 18px;
+      padding: 13px 16px;
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 8px;
+      white-space: nowrap;
       transition: all 0.2s;
     }
     .tab-btn:hover {
@@ -198,7 +201,317 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
       gap: 20px;
     }
 
-    /* Tab 1: Directory / File Catalog */
+    /* DASHBOARD GRID */
+    .kpi-row-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .kpi-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: border 0.2s;
+    }
+    .kpi-box:hover {
+      border-color: var(--border-accent);
+    }
+    .kpi-val {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    .kpi-lbl {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+    .kpi-sub {
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .dashboard-charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
+      gap: 20px;
+    }
+    .chart-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+    .chart-title {
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .chart-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+    .chart-canvas-wrap {
+      position: relative;
+      height: 290px;
+      width: 100%;
+    }
+
+    /* REPORTS TAB */
+    .reports-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 20px;
+      height: calc(100vh - 170px);
+    }
+    .reports-list {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .report-item {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s;
+    }
+    .report-item:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .report-item.active {
+      background: rgba(56, 189, 248, 0.08);
+      border-left: 3px solid var(--accent);
+    }
+    .rep-num-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .rep-item-title {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .rep-item-cat {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .report-detail-panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .rep-detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 18px;
+    }
+    .rep-detail-title h2 {
+      font-size: 20px;
+      font-weight: 800;
+    }
+    .rep-detail-cat {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .rep-kpis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .rep-kpi-card {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .rep-kpi-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .rep-kpi-lbl {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    .sec-block-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .rep-bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .rep-bullet-list li {
+      font-size: 13px;
+      line-height: 1.6;
+      padding-left: 18px;
+      position: relative;
+      color: #e2e8f0;
+    }
+    .rep-bullet-list li::before {
+      content: "▪";
+      position: absolute;
+      left: 4px;
+      color: var(--accent);
+    }
+    .rep-files-wrap {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .rep-file-pill {
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid var(--border-accent);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    /* JOB FOLDERS TAB */
+    .jobs-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 20px;
+      height: calc(100vh - 170px);
+    }
+    .jobs-list {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .job-item {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s;
+    }
+    .job-item:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .job-item.active {
+      background: rgba(56, 189, 248, 0.08);
+      border-left: 3px solid var(--accent);
+    }
+    .job-sym {
+      font-size: 20px;
+      width: 34px;
+      text-align: center;
+    }
+    .job-item-title {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .job-item-holder {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .job-detail-panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .job-ckp-box {
+      background: rgba(56, 189, 248, 0.06);
+      border: 1px solid var(--border-accent);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .job-ckp-val {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.5;
+    }
+    .job-stat-box {
+      background: rgba(52, 211, 153, 0.06);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .job-stat-val {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--success);
+      line-height: 1.5;
+    }
+
+    /* CATALOG TAB */
     .catalog-search-bar {
       display: flex;
       gap: 12px;
@@ -260,8 +573,6 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
       color: var(--text-muted);
       margin-left: auto;
     }
-
-    /* Table / List */
     .file-table-wrap {
       background: var(--card);
       border: 1px solid var(--border);
@@ -307,279 +618,7 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
     .file-icon.vtt { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
     .file-icon.zip { background: rgba(148, 163, 184, 0.15); color: #94a3b8; }
 
-    .file-name-cell {
-      font-weight: 600;
-      color: #fff;
-    }
-    .file-path-sub {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 3px;
-    }
-    .file-tag {
-      display: inline-block;
-      background: rgba(255, 255, 255, 0.06);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 10px;
-      margin-right: 4px;
-      color: #cbd5e1;
-    }
-
-    /* Tab 2: Analytics & Charts */
-    .charts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
-      gap: 20px;
-    }
-    .chart-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .chart-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 12px;
-    }
-    .chart-title {
-      font-size: 15px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .chart-sub {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-    .chart-canvas-wrap {
-      position: relative;
-      height: 280px;
-      width: 100%;
-    }
-    .chart-kpi-row {
-      display: flex;
-      gap: 12px;
-      margin-top: 6px;
-    }
-    .kpi-mini {
-      flex: 1;
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 8px 12px;
-    }
-    .kpi-mini-val {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--accent);
-    }
-    .kpi-mini-lbl {
-      font-size: 10px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    /* Tab 3: Employees & Dossiers */
-    .employees-layout {
-      display: grid;
-      grid-template-columns: 320px 1fr;
-      gap: 20px;
-      height: calc(100vh - 170px);
-    }
-    .employees-list {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-    }
-    .emp-item {
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: all 0.2s;
-    }
-    .emp-item:hover {
-      background: rgba(255, 255, 255, 0.03);
-    }
-    .emp-item.active {
-      background: rgba(56, 189, 248, 0.08);
-      border-left: 3px solid var(--accent);
-    }
-    .emp-avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-    .emp-info {
-      flex: 1;
-      min-width: 0;
-    }
-    .emp-name {
-      font-size: 13px;
-      font-weight: 700;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .emp-role-tag {
-      font-size: 11px;
-      color: var(--text-muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-top: 2px;
-    }
-    .emp-badge {
-      font-size: 10px;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-weight: 600;
-    }
-
-    .dossier-panel {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .dossier-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 18px;
-    }
-    .dossier-titles h2 {
-      font-size: 22px;
-      font-weight: 800;
-    }
-    .dossier-titles .real-role {
-      font-size: 14px;
-      color: var(--accent);
-      font-weight: 600;
-      margin-top: 4px;
-    }
-    .dossier-titles .nominal-role {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-    .dossier-roi-box {
-      text-align: right;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--border);
-      padding: 8px 14px;
-      border-radius: 8px;
-    }
-    .dossier-roi-val {
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--success);
-    }
-    .dossier-roi-lbl {
-      font-size: 10px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
-
-    .dossier-section {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .dossier-sec-title {
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 10px;
-    }
-    .metric-card {
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 8px;
-      padding: 10px 14px;
-    }
-    .metric-card-val {
-      font-size: 14px;
-      font-weight: 700;
-      color: #fff;
-    }
-    .metric-card-lbl {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .bullet-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .bullet-list li {
-      font-size: 13px;
-      line-height: 1.5;
-      padding-left: 18px;
-      position: relative;
-    }
-    .bullet-list li::before {
-      content: "•";
-      position: absolute;
-      left: 6px;
-      color: var(--accent);
-    }
-    .bullet-list.weak li::before {
-      color: var(--danger);
-    }
-
-    .verdict-callout {
-      background: rgba(56, 189, 248, 0.08);
-      border-left: 3px solid var(--accent);
-      border-radius: 6px;
-      padding: 12px 16px;
-      font-size: 13px;
-      line-height: 1.5;
-      font-weight: 500;
-    }
-    .verdict-callout.warning {
-      background: rgba(251, 191, 36, 0.08);
-      border-left-color: var(--warning);
-    }
-
-    /* Tab 4: Graph View */
+    /* GRAPH TAB */
     .graph-tab-wrap {
       flex: 1;
       height: calc(100vh - 170px);
@@ -620,197 +659,131 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
     <div class="brand">
       <div class="logo-badge">VBA ENTERPRISE</div>
       <div>
-        <div class="brand-title">VBA Trade Group · Интерактивная Платформа Знаний и Цифровой Двойник</div>
-        <div class="brand-sub">Версия 2.0 · Мастер-архив 305 файлов · Склад г. Брэила (Румыния) · Факт 1С по 28.10.2026</div>
+        <div class="brand-title">VBA Trade Group · Цифровая Модель Предприятия и Платформа Отчетов ГД</div>
+        <div class="brand-sub">8 Официальных Отчетов ГД · Факт 1С по 28.10.2026 · Склад г. Брэила · Мастер-архив 305 файлов</div>
       </div>
     </div>
     <div class="header-badges">
       <div class="h-badge accent">📁 305 Файлов</div>
-      <div class="h-badge success">📦 Факт: 10 225 шт. / 100.8k €</div>
+      <div class="h-badge success">📦 Факт 1С: 10 225 шт. / 100.8k €</div>
       <div class="h-badge success">🏛️ ING Bank: Agropec 0.00 RON</div>
-      <div class="h-badge warning">🏭 Склад: г. Брэила</div>
+      <div class="h-badge warning">🏭 Склад: г. Брэила (Румыния)</div>
     </div>
   </header>
 
   <!-- Navigation Tabs -->
   <div class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('tab-catalog')">📁 Справочник файлов (305 документов)</button>
-    <button class="tab-btn" onclick="switchTab('tab-analytics')">📊 Графика и интерактивная аналитика</button>
-    <button class="tab-btn" onclick="switchTab('tab-employees')">👥 Оргструктура и проверенные досье (БП)</button>
-    <button class="tab-btn" onclick="switchTab('tab-graph')">🕸️ Цифровой двойник и граф онтологии</button>
+    <button class="tab-btn active" onclick="switchTab('tab-dashboard')">📊 Рабочий дашборд предприятия</button>
+    <button class="tab-btn" onclick="switchTab('tab-reports')">📑 8 Официальных отчетов ГД</button>
+    <button class="tab-btn" onclick="switchTab('tab-graph')">🏭 Цифровая модель и зависимости</button>
+    <button class="tab-btn" onclick="switchTab('tab-jobs')">👔 Должностные папки и функции (ЦКП)</button>
+    <button class="tab-btn" onclick="switchTab('tab-catalog')">📁 Справочник базы знаний (305 файлов)</button>
   </div>
 
   <main>
-    <!-- TAB 1: FILE CATALOG -->
-    <div id="tab-catalog" class="tab-content active">
-      <div class="catalog-search-bar">
-        <div class="search-input-wrap">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="catalogSearch" placeholder="Поиск по названию файла, разделу или тегу..." oninput="filterCatalog()">
+    <!-- TAB 1: EXECUTIVE DASHBOARD -->
+    <div id="tab-dashboard" class="tab-content active">
+      <!-- Top KPI Row -->
+      <div class="kpi-row-grid">
+        <div class="kpi-box">
+          <div class="kpi-lbl">Выручка (Октябрь 2026)</div>
+          <div class="kpi-val" style="color: var(--accent);">100 806.38 €</div>
+          <div class="kpi-sub">123 накладных по 1С</div>
         </div>
-        <div class="filter-pills" id="categoryPills">
-          <div class="pill active" onclick="setCategoryFilter('all', this)">Все (305)</div>
-          <div class="pill" onclick="setCategoryFilter('01_', this)">01. Обучение и VTT</div>
-          <div class="pill" onclick="setCategoryFilter('02_', this)">02. Должностные папки</div>
-          <div class="pill" onclick="setCategoryFilter('03_', this)">03. Продажи Румыния</div>
-          <div class="pill" onclick="setCategoryFilter('04_', this)">04. Медиа первоисточники</div>
-          <div class="pill" onclick="setCategoryFilter('05_', this)">05. Стенограммы T01-T38</div>
-          <div class="pill" onclick="setCategoryFilter('06_', this)">06. Финмодели и P&L</div>
-          <div class="pill" onclick="setCategoryFilter('07_', this)">07. Стратегия А4</div>
-          <div class="pill" onclick="setCategoryFilter('08_', this)">08. Реструктуризация РО2</div>
-          <div class="pill" onclick="setCategoryFilter('09_', this)">09. Отчеты REV3</div>
-          <div class="pill" onclick="setCategoryFilter('10_', this)">10. Факт 1С и Склад</div>
-          <div class="pill" onclick="setCategoryFilter('11_', this)">11. Codex Platform</div>
+        <div class="kpi-box">
+          <div class="kpi-lbl">Валовая прибыль (Октябрь)</div>
+          <div class="kpi-val" style="color: var(--success);">14 300.62 €</div>
+          <div class="kpi-sub">Средняя маржа 1.40 €/шт.</div>
         </div>
-        <div class="catalog-stats" id="catalogStats">Показано 305 из 305 файлов</div>
+        <div class="kpi-box">
+          <div class="kpi-lbl">Объем реализации (Октябрь)</div>
+          <div class="kpi-val">10 225 шт.</div>
+          <div class="kpi-sub">Биг-бэги + вкладыши</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-lbl">Базовый план 2027 (REV3)</div>
+          <div class="kpi-val" style="color: var(--purple);">40 000 шт.</div>
+          <div class="kpi-sub">Выручка 252 523 €</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-lbl">Погашение Agropec Dionis</div>
+          <div class="kpi-val" style="color: var(--success);">210 540 RON</div>
+          <div class="kpi-sub">100% закрыто в ING Bank</div>
+        </div>
       </div>
 
-      <div class="file-table-wrap">
-        <table class="file-table">
-          <thead>
-            <tr>
-              <th style="width: 45%;">Название файла</th>
-              <th style="width: 25%;">Раздел / Папка</th>
-              <th style="width: 15%;">Теги</th>
-              <th style="width: 15%; text-align: right;">Размер</th>
-            </tr>
-          </thead>
-          <tbody id="catalogTableBody">
-            <!-- Dynamically populated -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- TAB 2: ANALYTICS & CHARTS -->
-    <div id="tab-analytics" class="tab-content">
-      <div class="charts-grid">
-        <!-- Chart 1: Sales & Margin Fact -->
+      <!-- Charts 2x2 Grid -->
+      <div class="dashboard-charts-grid">
+        <!-- Chart 1: Seasonality & Monthly Demand -->
         <div class="chart-card">
-          <div class="chart-card-header">
+          <div class="chart-header">
             <div>
-              <div class="chart-title">📈 Факт продаж и маржинальности (Сентябрь – Октябрь 2026)</div>
-              <div class="chart-sub">Данные 1С:Предприятие 8.3 (123 счета, 10 225 биг-бэгов со склада в Брэила)</div>
+              <div class="chart-title">📅 Помесячная динамика и сезонность спроса (2026 Факт vs 2027 Базовый план)</div>
+              <div class="chart-desc">Отчет №6: 12 месяцев агросезона Румынии (пик в сентябре 6 500 шт., базовый план 40 000 шт./год)</div>
             </div>
           </div>
           <div class="chart-canvas-wrap">
-            <canvas id="salesFactChart"></canvas>
-          </div>
-          <div class="chart-kpi-row">
-            <div class="kpi-mini">
-              <div class="kpi-mini-val">100 806.38 €</div>
-              <div class="kpi-mini-lbl">Выручка (Октябрь)</div>
-            </div>
-            <div class="kpi-mini">
-              <div class="kpi-mini-val">14 300.62 €</div>
-              <div class="kpi-mini-lbl">Чистая маржа</div>
-            </div>
-            <div class="kpi-mini">
-              <div class="kpi-mini-val">1.40 €/шт.</div>
-              <div class="kpi-mini-lbl">Средняя маржа</div>
-            </div>
+            <canvas id="seasonalityChart"></canvas>
           </div>
         </div>
 
-        <!-- Chart 2: Manager Comparison -->
+        <!-- Chart 2: 3 Strategic Scenarios 2027 -->
         <div class="chart-card">
-          <div class="chart-card-header">
+          <div class="chart-header">
             <div>
-              <div class="chart-title">⚔️ Сравнение продавцов: Дмитрий Ботя vs Андрей Лядский</div>
-              <div class="chart-sub">Объем маржи, штуки и личный ROI на 1 евро заработной платы</div>
+              <div class="chart-title">📈 3 Прогнозных сценария развития склада Румыния 2027 (REV3)</div>
+              <div class="chart-desc">Отчет №6: Сравнение объемов реализации, выручки, валовой прибыли и чистого остатка до прочих (€)</div>
             </div>
           </div>
           <div class="chart-canvas-wrap">
-            <canvas id="managerCompChart"></canvas>
-          </div>
-          <div class="chart-kpi-row">
-            <div class="kpi-mini">
-              <div class="kpi-mini-val">ROI 16.85x</div>
-              <div class="kpi-mini-lbl">Ботя (L2 Inbound Closer)</div>
-            </div>
-            <div class="kpi-mini">
-              <div class="kpi-mini-val">ROI 10.93x</div>
-              <div class="kpi-mini-lbl">Лядский (L3 Key Accounts)</div>
-            </div>
-            <div class="kpi-mini">
-              <div class="kpi-mini-val">179.6%</div>
-              <div class="kpi-mini-lbl">Выполнение плана 2026 (Лядский)</div>
-            </div>
+            <canvas id="scenariosChart"></canvas>
           </div>
         </div>
 
-        <!-- Chart 3: Avdeev Time Audit -->
+        <!-- Chart 3: Sales Segments Fact -->
         <div class="chart-card">
-          <div class="chart-card-header">
+          <div class="chart-header">
             <div>
-              <div class="chart-title">⏱️ Анатомия рабочего времени Авдеева (по 65 бланкам БП)</div>
-              <div class="chart-sub">Фактическое распределение 40 рабочих часов в неделю по задачам БП</div>
+              <div class="chart-title">📦 Структура отгрузок по сегментам партий (Факт 1С Октябрь 2026)</div>
+              <div class="chart-desc">Отчет №4 и №5: Распределение 10 225 шт. по партиям (Розница 5-50, Опт 51-299, Спецконтракты)</div>
             </div>
           </div>
           <div class="chart-canvas-wrap">
-            <canvas id="avdeevTimeChart"></canvas>
-          </div>
-          <div class="chart-kpi-row">
-            <div class="kpi-mini">
-              <div class="kpi-mini-val" style="color: var(--warning);">67.2%</div>
-              <div class="kpi-mini-lbl">Созвоны и рутина (Битрикс)</div>
-            </div>
-            <div class="kpi-mini">
-              <div class="kpi-mini-val" style="color: var(--danger);">18.5%</div>
-              <div class="kpi-mini-lbl">Сорванные задачи (eMAG, склад)</div>
-            </div>
-            <div class="kpi-mini">
-              <div class="kpi-mini-val" style="color: var(--accent);">0.0%</div>
-              <div class="kpi-mini-lbl">Личные продажи / Стратегия</div>
-            </div>
+            <canvas id="segmentsChart"></canvas>
           </div>
         </div>
 
-        <!-- Chart 4: SKU Economics -->
+        <!-- Chart 4: Receivables & Bank Status -->
         <div class="chart-card">
-          <div class="chart-card-header">
+          <div class="chart-header">
             <div>
-              <div class="chart-title">📦 Маржинальность товарной матрицы (Unit Economics)</div>
-              <div class="chart-sub">Чистая маржа с единицы продукции по факту 1С за октябрь 2026 г.</div>
+              <div class="chart-title">🏛️ Контроль дебиторской задолженности и погашение в ING Bank</div>
+              <div class="chart-desc">Отчет №3 и выписка ING Bank от 28.10.2026: Урегулирование 210 540 RON долга Agropec и текущее сальдо</div>
             </div>
           </div>
           <div class="chart-canvas-wrap">
-            <canvas id="skuMarginChart"></canvas>
-          </div>
-          <div class="chart-kpi-row">
-            <div class="kpi-mini">
-              <div class="kpi-mini-val" style="color: var(--success);">+16.58 €/шт.</div>
-              <div class="kpi-mini-lbl">Ж/д вкладыши (Liner Bags)</div>
-            </div>
-            <div class="kpi-mini">
-              <div class="kpi-mini-val">+1.40 €/шт.</div>
-              <div class="kpi-mini-lbl">Биг-бэги 4-петлевые</div>
-            </div>
-            <div class="kpi-mini">
-              <div class="kpi-mini-val" style="color: var(--danger);">-0.013 €/шт.</div>
-              <div class="kpi-mini-lbl">Мешки 55x110 (Убыток)</div>
-            </div>
+            <canvas id="receivablesChart"></canvas>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- TAB 3: EMPLOYEES & DOSSIERS -->
-    <div id="tab-employees" class="tab-content">
-      <div class="employees-layout">
-        <!-- List of employees -->
-        <div class="employees-list" id="empListContainer">
+    <!-- TAB 2: 8 OFFICIAL REPORTS -->
+    <div id="tab-reports" class="tab-content">
+      <div class="reports-layout">
+        <!-- List of reports -->
+        <div class="reports-list" id="reportsListContainer">
           <!-- Dynamically populated -->
         </div>
 
-        <!-- Active Dossier Details -->
-        <div class="dossier-panel" id="dossierPanel">
+        <!-- Detailed Report Panel -->
+        <div class="report-detail-panel" id="reportDetailPanel">
           <!-- Dynamically populated on click -->
         </div>
       </div>
     </div>
 
-    <!-- TAB 4: ONTOLOGY GRAPH -->
+    <!-- TAB 3: ENTERPRISE DIGITAL TWIN & DEPENDENCY GRAPH -->
     <div id="tab-graph" class="tab-content" style="padding: 0;">
       <div class="graph-tab-wrap">
         <div id="network"></div>
@@ -822,22 +795,72 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
           <p id="drawerCkp" style="font-size: 13px; margin-bottom: 14px; background: rgba(0,0,0,0.3); padding: 8px 10px; border-radius: 6px;"></p>
           <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px;">Метрики и факты</div>
           <p id="drawerMetrics" style="font-size: 13px; margin-bottom: 14px;"></p>
-          <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px;">Описание сущности</div>
+          <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px;">Описание процесса / звена</div>
           <p id="drawerDesc" style="font-size: 12px; color: #cbd5e1; line-height: 1.5; margin-bottom: 16px;"></p>
           <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Связанные документы</div>
           <div id="drawerFiles" style="display: flex; flex-direction: column; gap: 6px;"></div>
         </div>
       </div>
     </div>
+
+    <!-- TAB 4: JOB FOLDERS & POSTS (CKP) -->
+    <div id="tab-jobs" class="tab-content">
+      <div class="jobs-layout">
+        <div class="jobs-list" id="jobsListContainer">
+          <!-- Dynamically populated -->
+        </div>
+        <div class="job-detail-panel" id="jobDetailPanel">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: FILE CATALOG -->
+    <div id="tab-catalog" class="tab-content">
+      <div class="catalog-search-bar">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="catalogSearch" placeholder="Поиск по 305 файлам, папкам или тегам..." oninput="filterCatalog()">
+        </div>
+        <div class="filter-pills" id="categoryPills">
+          <div class="pill active" onclick="setCategoryFilter('all', this)">Все (305)</div>
+          <div class="pill" onclick="setCategoryFilter('09_', this)">09. Пакет Отчетов ГД 01-08</div>
+          <div class="pill" onclick="setCategoryFilter('10_', this)">10. Факт 1С и Склад Брэила</div>
+          <div class="pill" onclick="setCategoryFilter('06_', this)">06. Финмодели и P&L</div>
+          <div class="pill" onclick="setCategoryFilter('07_', this)">07. Стратегия Румыния А4</div>
+          <div class="pill" onclick="setCategoryFilter('08_', this)">08. Реструктуризация РО2</div>
+          <div class="pill" onclick="setCategoryFilter('02_', this)">02. Должностные папки и ЦКП</div>
+          <div class="pill" onclick="setCategoryFilter('05_', this)">05. Стенограммы координаций</div>
+          <div class="pill" onclick="setCategoryFilter('01_', this)">01. Обучение и субтитры VTT</div>
+        </div>
+        <div class="catalog-stats" id="catalogStats">Показано 305 из 305 файлов</div>
+      </div>
+
+      <div class="file-table-wrap">
+        <table class="file-table">
+          <thead>
+            <tr>
+              <th style="width: 45%;">Название файла</th>
+              <th style="width: 25%;">Раздел / Каталог</th>
+              <th style="width: 15%;">Теги</th>
+              <th style="width: 15%; text-align: right;">Размер</th>
+            </tr>
+          </thead>
+          <tbody id="catalogTableBody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </div>
   </main>
 
-  <!-- JAVASCRIPT LOGIC -->
+  <!-- SCRIPT LOGIC -->
   <script>
-    // Embedded Data
     const catalogData = [{"name": "00_ГЕНЕРАЛЬНАЯ_КАРТА_БАЗЫ_ЗНАНИЙ_301_ФАЙЛ.md", "path": "00_ГЕНЕРАЛЬНАЯ_КАРТА_БАЗЫ_ЗНАНИЙ_301_ФАЙЛ.md", "size": 32470, "size_str": "31.7 KB", "ext": ".md", "tags": ["Общие"], "category": "Корень"}, {"name": "00_ОНТОЛОГИЯ_И_ГРАФ_ЗАВИСИМОСТЕЙ_СУЩНОСТЕЙ_VBA.md", "path": "00_ОНТОЛОГИЯ_И_ГРАФ_ЗАВИСИМОСТЕЙ_СУЩНОСТЕЙ_VBA.md", "size": 11741, "size_str": "11.5 KB", "ext": ".md", "tags": ["Общие"], "category": "Корень"}, {"name": "00_ЦИФРОВОЙ_ДВОЙНИК_ПРЕДПРИЯТИЯ_И_ГРАФ_ЗНАНИЙ.html", "path": "00_ЦИФРОВОЙ_ДВОЙНИК_ПРЕДПРИЯТИЯ_И_ГРАФ_ЗНАНИЙ.html", "size": 752863, "size_str": "735.2 KB", "ext": ".html", "tags": ["Общие"], "category": "Корень"}, {"name": "01_ING_Bank_Выписка_28-10-2026_VBA_TG_BAG_SRL.pdf", "path": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/01_ING_Bank_Выписка_28-10-2026_VBA_TG_BAG_SRL.pdf", "size": 108837, "size_str": "106.3 KB", "ext": ".pdf", "tags": ["1С_Факт", "Склад_Брэила", "Банк_ING"], "category": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА"}, {"name": "01_Продажи_Ботя_1С_28.09-28.10.2026_ФАКТ.xlsx", "path": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/01_Продажи_Ботя_1С_28.09-28.10.2026_ФАКТ.xlsx", "size": 80898, "size_str": "79.0 KB", "ext": ".xlsx", "tags": ["1С_Факт", "Склад_Брэила", "Банк_ING"], "category": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА"}, {"name": "02_Взаиморасчеты_Лядский_1С_по_26.10.2026.xlsx", "path": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/02_Взаиморасчеты_Лядский_1С_по_26.10.2026.xlsx", "size": 81941, "size_str": "80.0 KB", "ext": ".xlsx", "tags": ["1С_Факт", "Склад_Брэила", "Банк_ING"], "category": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА"}, {"name": "02_Книга_расходов_склада_Брэила_Pedchenko.csv", "path": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/02_Книга_расходов_склада_Брэила_Pedchenko.csv", "size": 2307, "size_str": "2.3 KB", "ext": ".csv", "tags": ["1С_Факт", "Склад_Брэила", "Банк_ING"], "category": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА"}, {"name": "03_Остатки_товаров_Склад_Брэила_27.10.2026.xlsx", "path": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/03_Остатки_товаров_Склад_Брэила_27.10.2026.xlsx", "size": 11956, "size_str": "11.7 KB", "ext": ".xlsx", "tags": ["1С_Факт", "Склад_Брэила", "Банк_ING"], "category": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА"}, {"name": "04_Склад_Генеральный_реестр_партий_1С.xlsx", "path": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/04_Склад_Генеральный_реестр_партий_1С.xlsx", "size": 924243, "size_str": "902.6 KB", "ext": ".xlsx", "tags": ["1С_Факт", "Склад_Брэила", "Банк_ING"], "category": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА"}, {"name": "05_Задолженность_поставщикам_за_год_1С.xlsx", "path": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/05_Задолженность_поставщикам_за_год_1С.xlsx", "size": 72434, "size_str": "70.7 KB", "ext": ".xlsx", "tags": ["1С_Факт", "Склад_Брэила", "Банк_ING"], "category": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА"}, {"name": "06_Отчет_о_событиях_и_заказах_1-20.10.2026.xlsx", "path": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/06_Отчет_о_событиях_и_заказах_1-20.10.2026.xlsx", "size": 16836, "size_str": "16.4 KB", "ext": ".xlsx", "tags": ["1С_Факт", "Склад_Брэила", "Банк_ING"], "category": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА"}, {"name": "07_Продажи_Лядский_1-27.10.2026.xlsx", "path": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/07_Продажи_Лядский_1-27.10.2026.xlsx", "size": 89614, "size_str": "87.5 KB", "ext": ".xlsx", "tags": ["1С_Факт", "Склад_Брэила", "Банк_ING"], "category": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА"}, {"name": "08_Контракт_VBA_TG_BAG_Global_Grain_Logistics.pdf", "path": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/08_Контракт_VBA_TG_BAG_Global_Grain_Logistics.pdf", "size": 4914904, "size_str": "4.7 MB", "ext": ".pdf", "tags": ["1С_Факт", "Склад_Брэила", "Банк_ING"], "category": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА"}, {"name": "1 Contract VBA TG BAG - Global Grain Logistics_.pdf", "path": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/1 Contract VBA TG BAG - Global Grain Logistics_.pdf", "size": 4914904, "size_str": "4.7 MB", "ext": ".pdf", "tags": ["1С_Факт", "Склад_Брэила", "Банк_ING"], "category": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА"}, {"name": "ING_Extras_consolidat_28-10-26_VBA TG BAG S.R.L..pdf", "path": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/ING_Extras_consolidat_28-10-26_VBA TG BAG S.R.L..pdf", "size": 109862, "size_str": "107.3 KB", "ext": ".pdf", "tags": ["1С_Факт", "Склад_Брэила", "Банк_ING"], "category": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА"}, {"name": "prodazhi_botya_2809_281026.xlsx", "path": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/prodazhi_botya_2809_281026.xlsx", "size": 80898, "size_str": "79.0 KB", "ext": ".xlsx", "tags": ["1С_Факт", "Склад_Брэила", "Банк_ING"], "category": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА"}, {"name": "01_VBA_ИСПОЛНИТЕЛЬНЫЙ_ОДНОСТРАНИЧНИК_А4.pdf", "path": "07_СТРАТЕГИЯ_И_ДЕКОМПОЗИЦИЯ_А4/01_VBA_ИСПОЛНИТЕЛЬНЫЙ_ОДНОСТРАНИЧНИК_А4.pdf", "size": 638831, "size_str": "623.9 KB", "ext": ".pdf", "tags": ["Стратегия", "Декомпозиция_А4", "Планирование"], "category": "07_СТРАТЕГИЯ_И_ДЕКОМПОЗИЦИЯ_А4"}, {"name": "02_VBA_Интерактивная_Инфографика_А4.html", "path": "07_СТРАТЕГИЯ_И_ДЕКОМПОЗИЦИЯ_А4/02_VBA_Интерактивная_Инфографика_А4.html", "size": 22851, "size_str": "22.3 KB", "ext": ".html", "tags": ["Стратегия", "Декомпозиция_А4", "Планирование"], "category": "07_СТРАТЕГИЯ_И_ДЕКОМПОЗИЦИЯ_А4"}, {"name": "03_Полная_сквозная_декомпозиция_бизнес_модели_9_блоков.md", "path": "07_СТРАТЕГИЯ_И_ДЕКОМПОЗИЦИЯ_А4/03_Полная_сквозная_декомпозиция_бизнес_модели_9_блоков.md", "size": 30157, "size_str": "29.5 KB", "ext": ".md", "tags": ["Стратегия", "Декомпозиция_А4", "Планирование"], "category": "07_СТРАТЕГИЯ_И_ДЕКОМПОЗИЦИЯ_А4"}, {"name": "04_Справка_по_архитектуре_листа_А4.md", "path": "07_СТРАТЕГИЯ_И_ДЕКОМПОЗИЦИЯ_А4/04_Справка_по_архитектуре_листа_А4.md", "size": 5256, "size_str": "5.1 KB", "ext": ".md", "tags": ["Стратегия", "Декомпозиция_А4", "Планирование"], "category": "07_СТРАТЕГИЯ_И_ДЕКОМПОЗИЦИЯ_А4"}, {"name": "05_VBA_Болгария_Партнерское_предложение.pdf", "path": "07_СТРАТЕГИЯ_И_ДЕКОМПОЗИЦИЯ_А4/05_VBA_Болгария_Партнерское_предложение.pdf", "size": 2920868, "size_str": "2.8 MB", "ext": ".pdf", "tags": ["Стратегия", "Декомпозиция_А4", "Планирование"], "category": "07_СТРАТЕГИЯ_И_ДЕКОМПОЗИЦИЯ_А4"}, {"name": "06_Официальный_Оффер_VBA_TRADE_GROUP.xlsx", "path": "07_СТРАТЕГИЯ_И_ДЕКОМПОЗИЦИЯ_А4/06_Официальный_Оффер_VBA_TRADE_GROUP.xlsx", "size": 2680956, "size_str": "2.6 MB", "ext": ".xlsx", "tags": ["Стратегия", "Декомпозиция_А4", "Планирование"], "category": "07_СТРАТЕГИЯ_И_ДЕКОМПОЗИЦИЯ_А4"}, {"name": "01_VBA_МАСТЕР_ФИНМОДЕЛЬ_2026-2027_10_ЛИСТОВ.xlsx", "path": "06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027/01_VBA_МАСТЕР_ФИНМОДЕЛЬ_2026-2027_10_ЛИСТОВ.xlsx", "size": 38728, "size_str": "37.8 KB", "ext": ".xlsx", "tags": ["Финансы", "Финмодели", "P&L", "ФП1"], "category": "06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027"}, {"name": "02_REV11_Чистая_прибыль_Авдеев_Каноническая.xlsx", "path": "06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027/02_REV11_Чистая_прибыль_Авдеев_Каноническая.xlsx", "size": 76612, "size_str": "74.8 KB", "ext": ".xlsx", "tags": ["Финансы", "Финмодели", "P&L", "ФП1"], "category": "06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027"}, {"name": "03_FP1_Финансовое_планирование_Расин.xlsx", "path": "06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027/03_FP1_Финансовое_планирование_Расин.xlsx", "size": 537224, "size_str": "524.6 KB", "ext": ".xlsx", "tags": ["Финансы", "Финмодели", "P&L", "ФП1"], "category": "06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027"}, {"name": "04_ПЗП_RO_MD_Сверка_ФП1.xlsx", "path": "06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027/04_ПЗП_RO_MD_Сверка_ФП1.xlsx", "size": 51271, "size_str": "50.1 KB", "ext": ".xlsx", "tags": ["Финансы", "Финмодели", "P&L", "ФП1"], "category": "06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027"}, {"name": "05_Интерактивный_Дашборд_ГД_10_Листов.html", "path": "06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027/05_Интерактивный_Дашборд_ГД_10_Листов.html", "size": 46646, "size_str": "45.6 KB", "ext": ".html", "tags": ["Финансы", "Финмодели", "P&L", "ФП1"], "category": "06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027"}, {"name": "06_Регламент_и_описание_Мастер_Финмодели.md", "path": "06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027/06_Регламент_и_описание_Мастер_Финмодели.md", "size": 6905, "size_str": "6.7 KB", "ext": ".md", "tags": ["Финансы", "Финмодели", "P&L", "ФП1"], "category": "06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027"}, {"name": "01_Продукт_склад_рынок_REV3.pdf", "path": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/01_Продукт_склад_рынок_REV3.pdf", "size": 931520, "size_str": "909.7 KB", "ext": ".pdf", "tags": ["Отчеты", "Утверждено_REV3", "Аналитика"], "category": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ"}, {"name": "01_Продукт_склад_рынок_REV3_Расчёты.xlsx", "path": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/01_Продукт_склад_рынок_REV3_Расчёты.xlsx", "size": 27102, "size_str": "26.5 KB", "ext": ".xlsx", "tags": ["Отчеты", "Утверждено_REV3", "Аналитика"], "category": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ"}, {"name": "02_Розница_входящий_поток_реклама_REV3.pdf", "path": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/02_Розница_входящий_поток_реклама_REV3.pdf", "size": 372374, "size_str": "363.6 KB", "ext": ".pdf", "tags": ["Отчеты", "Утверждено_REV3", "Аналитика"], "category": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ"}, {"name": "02_Розница_входящий_поток_реклама_REV3_Расчёты.xlsx", "path": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/02_Розница_входящий_поток_реклама_REV3_Расчёты.xlsx", "size": 33474, "size_str": "32.7 KB", "ext": ".xlsx", "tags": ["Отчеты", "Утверждено_REV3", "Аналитика"], "category": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ"}, {"name": "03_Опт_VIP_Румыния_REV3.pdf", "path": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/03_Опт_VIP_Румыния_REV3.pdf", "size": 305732, "size_str": "298.6 KB", "ext": ".pdf", "tags": ["Отчеты", "Утверждено_REV3", "Аналитика"], "category": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ"}, {"name": "03_Опт_VIP_Румыния_REV3_Расчёты.xlsx", "path": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/03_Опт_VIP_Румыния_REV3_Расчёты.xlsx", "size": 30717, "size_str": "30.0 KB", "ext": ".xlsx", "tags": ["Отчеты", "Утверждено_REV3", "Аналитика"], "category": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ"}, {"name": "04_Работа_Дмитрия_Боти_REV5.pdf", "path": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/04_Работа_Дмитрия_Боти_REV5.pdf", "size": 125842, "size_str": "122.9 KB", "ext": ".pdf", "tags": ["Отчеты", "Утверждено_REV3", "Аналитика"], "category": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ"}, {"name": "05_Сводный_ГД_REV4.pdf", "path": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/05_Сводный_ГД_REV4.pdf", "size": 122574, "size_str": "119.7 KB", "ext": ".pdf", "tags": ["Отчеты", "Утверждено_REV3", "Аналитика"], "category": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ"}, {"name": "05_Сводный_ГД_REV4_Расчёты.xlsx", "path": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/05_Сводный_ГД_REV4_Расчёты.xlsx", "size": 48488, "size_str": "47.4 KB", "ext": ".xlsx", "tags": ["Отчеты", "Утверждено_REV3", "Аналитика"], "category": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ"}, {"name": "06_Стратегия_Румыния_2027_REV3.pdf", "path": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/06_Стратегия_Румыния_2027_REV3.pdf", "size": 143347, "size_str": "140.0 KB", "ext": ".pdf", "tags": ["Отчеты", "Утверждено_REV3", "Аналитика"], "category": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ"}, {"name": "06_Стратегия_Румыния_2027_REV3_Расчёты.xlsx", "path": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/06_Стратегия_Румыния_2027_REV3_Расчёты.xlsx", "size": 37757, "size_str": "36.9 KB", "ext": ".xlsx", "tags": ["Отчеты", "Утверждено_REV3", "Аналитика"], "category": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ"}, {"name": "07_Программа_реализации_Румыния_REV3.pdf", "path": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/07_Программа_реализации_Румыния_REV3.pdf", "size": 127171, "size_str": "124.2 KB", "ext": ".pdf", "tags": ["Отчеты", "Утверждено_REV3", "Аналитика"], "category": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ"}, {"name": "08_Конкурентная_разведка_ТОП10_Румыния_REV1.pdf", "path": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/08_Конкурентная_разведка_ТОП10_Румыния_REV1.pdf", "size": 122826, "size_str": "119.9 KB", "ext": ".pdf", "tags": ["Отчеты", "Утверждено_REV3", "Аналитика"], "category": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ"}, {"name": "2022-09-14_Інструкція_Про_ведення_обліку,_зберігання_та_використання_договорів_в_електронному_форматі.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/06_Внутренние_процессы_и_ИИ/2022-09-14_Інструкція_Про_ведення_обліку,_зберігання_та_використання_договорів_в_електронному_форматі.docx", "size": 41507, "size_str": "40.5 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "2025-04-30_Инструкция_Как_использовать_SEMBLY_AI_для_создания_сводок_встреч.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/06_Внутренние_процессы_и_ИИ/2025-04-30_Инструкция_Как_использовать_SEMBLY_AI_для_создания_сводок_встреч.docx", "size": 2726347, "size_str": "2.6 MB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "2026-05-31_ИП_Правила_использования_Sembly_AI_для_некоторых_видов_координаций.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/06_Внутренние_процессы_и_ИИ/2026-05-31_ИП_Правила_использования_Sembly_AI_для_некоторых_видов_координаций.docx", "size": 40536, "size_str": "39.6 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "Инструкция_КАК_ИСПОЛЬЗОВАТЬ_SEMBLY_AI_ДЛЯ_СОЗДАНИЯ_СВОДОК_ВСТРЕЧ.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/06_Внутренние_процессы_и_ИИ/Инструкция_КАК_ИСПОЛЬЗОВАТЬ_SEMBLY_AI_ДЛЯ_СОЗДАНИЯ_СВОДОК_ВСТРЕЧ.docx", "size": 2726265, "size_str": "2.6 MB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "2015-06-11_Регламент_по_финансовому_планированию.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/05_Себестоимость_и_финансы/2015-06-11_Регламент_по_финансовому_планированию.docx", "size": 762634, "size_str": "744.8 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "2019-06-06_Инструкция_Правила_финансового_планирования.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/05_Себестоимость_и_финансы/2019-06-06_Инструкция_Правила_финансового_планирования.docx", "size": 49874, "size_str": "48.7 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "Беги_2021-09-23_Инструкция_Формирование_правильной_себестоимости_заказа_покупателя.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/05_Себестоимость_и_финансы/Беги_2021-09-23_Инструкция_Формирование_правильной_себестоимости_заказа_покупателя.docx", "size": 522775, "size_str": "510.5 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "Инструкция_ПО_созданию_заказов_на_маржу_Европа.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/05_Себестоимость_и_финансы/Инструкция_ПО_созданию_заказов_на_маржу_Европа.docx", "size": 276998, "size_str": "270.5 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "РО,_РСФ,_ИД,_ГД_2019-08-22_Инструкция_Как_утверждать_директиву_финансового_планирования.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/05_Себестоимость_и_финансы/РО,_РСФ,_ИД,_ГД_2019-08-22_Инструкция_Как_утверждать_директиву_финансового_планирования.docx", "size": 1526551, "size_str": "1.5 MB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "РО_2019-06-06_Инструкция_Правила_финансового_планирования.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/05_Себестоимость_и_финансы/РО_2019-06-06_Инструкция_Правила_финансового_планирования.docx", "size": 48645, "size_str": "47.5 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "10._Успешные_действия_и_типичные_ошибки.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/01_Должностная_папка_ВБА/10._Успешные_действия_и_типичные_ошибки.docx", "size": 40613, "size_str": "39.7 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "11._Инструменты,_необходимые_для_производства_ЦКП.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/01_Должностная_папка_ВБА/11._Инструменты,_необходимые_для_производства_ЦКП.docx", "size": 34128, "size_str": "33.3 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "13._Инструкции_по_выполнению_действий_на_посту.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/01_Должностная_папка_ВБА/13._Инструкции_по_выполнению_действий_на_посту.docx", "size": 37736, "size_str": "36.9 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "2._Цель_поста.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/01_Должностная_папка_ВБА/2._Цель_поста.docx", "size": 39784, "size_str": "38.9 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "3._Ценный_конечный_продукт_поста_сокращенно_ЦКП.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/01_Должностная_папка_ВБА/3._Ценный_конечный_продукт_поста_сокращенно_ЦКП.docx", "size": 33637, "size_str": "32.8 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "4._Статистики_поста.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/01_Должностная_папка_ВБА/4._Статистики_поста.docx", "size": 35700, "size_str": "34.9 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "5._Идеальная_картина_работы_на_данном_посту.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/01_Должностная_папка_ВБА/5._Идеальная_картина_работы_на_данном_посту.docx", "size": 36181, "size_str": "35.3 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "6._Приоритеты_в_организации_работы_на_данном_посту.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/01_Должностная_папка_ВБА/6._Приоритеты_в_организации_работы_на_данном_посту.docx", "size": 36907, "size_str": "36.0 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "7._Положение_поста_на_орг.схеме.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/01_Должностная_папка_ВБА/7._Положение_поста_на_орг.схеме.docx", "size": 36143, "size_str": "35.3 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "9а._Основные_обязанности_на_посту.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/01_Должностная_папка_ВБА/9а._Основные_обязанности_на_посту.docx", "size": 48860, "size_str": "47.7 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "Ответы_по_должности.md", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/01_Должностная_папка_ВБА/Ответы_по_должности.md", "size": 17083, "size_str": "16.7 KB", "ext": ".md", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "01_Письмо_Геннадия_Мороза_Инструменты_управления_ВБА.md", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/07_Методология_ЦКП_и_управления/01_Письмо_Геннадия_Мороза_Инструменты_управления_ВБА.md", "size": 3873, "size_str": "3.8 KB", "ext": ".md", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "01_ЦКП_Определение.md", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/07_Методология_ЦКП_и_управления/01_ЦКП_Определение.md", "size": 7331, "size_str": "7.2 KB", "ext": ".md", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "02_ЦКП_Компании.md", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/07_Методология_ЦКП_и_управления/02_ЦКП_Компании.md", "size": 7835, "size_str": "7.7 KB", "ext": ".md", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "03_ЦКП_Руководителя.md", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/07_Методология_ЦКП_и_управления/03_ЦКП_Руководителя.md", "size": 4819, "size_str": "4.7 KB", "ext": ".md", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "04_Виды_обмена.md", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/07_Методология_ЦКП_и_управления/04_Виды_обмена.md", "size": 6424, "size_str": "6.3 KB", "ext": ".md", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "2016-01-20_Регламент_действий_по_координации_ООО_Компания_ВБА.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/03_Регламенты_папок_и_оргполитики/2016-01-20_Регламент_действий_по_координации_ООО_Компания_ВБА.docx", "size": 243921, "size_str": "238.2 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "2017-02-09_ИП_Правила_для_сотрудника_который_увольняется.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/03_Регламенты_папок_и_оргполитики/2017-02-09_ИП_Правила_для_сотрудника_который_увольняется.docx", "size": 356524, "size_str": "348.2 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "2018-07-31_ИП_О_предоставлении_отпусков_в_компании.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/03_Регламенты_папок_и_оргполитики/2018-07-31_ИП_О_предоставлении_отпусков_в_компании.docx", "size": 38769, "size_str": "37.9 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "2019-06-30_Инструкция_Как_писать_еженедельные_и_ежедневные_отчеты.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/03_Регламенты_папок_и_оргполитики/2019-06-30_Инструкция_Как_писать_еженедельные_и_ежедневные_отчеты.docx", "size": 367129, "size_str": "358.5 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "2021-08-16_Регламент_по_составлению_должностных_папок.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/03_Регламенты_папок_и_оргполитики/2021-08-16_Регламент_по_составлению_должностных_папок.docx", "size": 363919, "size_str": "355.4 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "2024-05-01_Инструкция_Правила_работы_сотрудников_с_google-сайтом.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/03_Регламенты_папок_и_оргполитики/2024-05-01_Инструкция_Правила_работы_сотрудников_с_google-сайтом.docx", "size": 1077387, "size_str": "1.0 MB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "2026-03-23_Директива_Виды_внутренних_документов_компании.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/03_Регламенты_папок_и_оргполитики/2026-03-23_Директива_Виды_внутренних_документов_компании.docx", "size": 37076, "size_str": "36.2 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "График_замещения_во_время_отпуска.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/03_Регламенты_папок_и_оргполитики/График_замещения_во_время_отпуска.docx", "size": 7972, "size_str": "7.8 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "Охрана_труда_и_техника_безопасности.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/03_Регламенты_папок_и_оргполитики/Охрана_труда_и_техника_безопасности.docx", "size": 17702, "size_str": "17.3 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "01_ЕП_Планирование_Часть_1.md", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/04_Управление_и_планирование_недели/01_ЕП_Планирование_Часть_1.md", "size": 5853, "size_str": "5.7 KB", "ext": ".md", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "02_ЕП_Планирование_Часть_2.md", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/04_Управление_и_планирование_недели/02_ЕП_Планирование_Часть_2.md", "size": 4838, "size_str": "4.7 KB", "ext": ".md", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "03_ЕП_Боевой_план.md", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/04_Управление_и_планирование_недели/03_ЕП_Боевой_план.md", "size": 3508, "size_str": "3.4 KB", "ext": ".md", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "04_ЕП_Статистики_и_квоты.md", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/04_Управление_и_планирование_недели/04_ЕП_Статистики_и_квоты.md", "size": 3472, "size_str": "3.4 KB", "ext": ".md", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "05_ЕП_Продукты_и_время.md", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/04_Управление_и_планирование_недели/05_ЕП_Продукты_и_время.md", "size": 3794, "size_str": "3.7 KB", "ext": ".md", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "06_ЕП_Согласование_и_контроль.md", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/04_Управление_и_планирование_недели/06_ЕП_Согласование_и_контроль.md", "size": 4194, "size_str": "4.1 KB", "ext": ".md", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "2016-01-20_Регламент_по_планированию_на_неделю_ООО_Компания_ВБА.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/04_Управление_и_планирование_недели/2016-01-20_Регламент_по_планированию_на_неделю_ООО_Компания_ВБА.docx", "size": 828749, "size_str": "809.3 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "НО1,_РО,_ИД_2021_05_19_Инструкция_Прояснения_продукта_и_функций.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/04_Управление_и_планирование_недели/НО1,_РО,_ИД_2021_05_19_Инструкция_Прояснения_продукта_и_функций.docx", "size": 38163, "size_str": "37.3 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "Планирование_рабочая_выжимка.md", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/04_Управление_и_планирование_недели/Планирование_рабочая_выжимка.md", "size": 3215, "size_str": "3.1 KB", "ext": ".md", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "Регламент_планирования_недели_RU_UA.md", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/04_Управление_и_планирование_недели/Регламент_планирования_недели_RU_UA.md", "size": 109459, "size_str": "106.9 KB", "ext": ".md", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "план_на_неделю_руководителя_отделения_ВБА.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/04_Управление_и_планирование_недели/план_на_неделю_руководителя_отделения_ВБА.docx", "size": 789375, "size_str": "770.9 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "9а_Обязанности_экспорт_2026-09-24.docx", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/02_Актуальные_снимки_и_изменения/9а_Обязанности_экспорт_2026-09-24.docx", "size": 51507, "size_str": "50.3 KB", "ext": ".docx", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "Изменения_обязанностей_22_24_сентября.diff", "path": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/02_Актуальные_снимки_и_изменения/Изменения_обязанностей_22_24_сентября.diff", "size": 44196, "size_str": "43.2 KB", "ext": ".diff", "tags": ["Медиа", "Координации", "Аудио-Видео"], "category": "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП"}, {"name": "01_ТЗ_и_финмодель_реструктуризации_отдела_продаж_РО2.md", "path": "08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/01_ТЗ_и_финмодель_реструктуризации_отдела_продаж_РО2.md", "size": 4438, "size_str": "4.3 KB", "ext": ".md", "tags": ["Реструктуризация", "РО2", "L1-L3", "Аудит"], "category": "08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3"}, {"name": "02_Комплексный_аудит_и_стратегический_план_РО2.md", "path": "08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/02_Комплексный_аудит_и_стратегический_план_РО2.md", "size": 19278, "size_str": "18.8 KB", "ext": ".md", "tags": ["Реструктуризация", "РО2", "L1-L3", "Аудит"], "category": "08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3"}, {"name": "03_Интерактивный_график_динамики_продаж_Боти.html", "path": "08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/03_Интерактивный_график_динамики_продаж_Боти.html", "size": 14739, "size_str": "14.4 KB", "ext": ".html", "tags": ["Реструктуризация", "РО2", "L1-L3", "Аудит"], "category": "08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3"}, {"name": "04_Реестр_базы_знаний_358_документов_Google_Drive.md", "path": "08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/04_Реестр_базы_знаний_358_документов_Google_Drive.md", "size": 50362, "size_str": "49.2 KB", "ext": ".md", "tags": ["Реструктуризация", "РО2", "L1-L3", "Аудит"], "category": "08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3"}, {"name": "05_Отчет_сопоставления_двух_моделей_и_аудита_Авдеева.md", "path": "08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/05_Отчет_сопоставления_двух_моделей_и_аудита_Авдеева.md", "size": 12913, "size_str": "12.6 KB", "ext": ".md", "tags": ["Реструктуризация", "РО2", "L1-L3", "Аудит"], "category": "08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3"}, {"name": "2023-05-19_Инструкция_Правила_по_продажам_биг-бегов.xlsx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/04_Стандарты_и_правила_продаж/2023-05-19_Инструкция_Правила_по_продажам_биг-бегов.xlsx", "size": 5412737, "size_str": "5.2 MB", "ext": ".xlsx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "2023-12-21_ИП_Правила_расчета_цены_для_клиента_в_Европе.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/04_Стандарты_и_правила_продаж/2023-12-21_ИП_Правила_расчета_цены_для_клиента_в_Европе.docx", "size": 40401, "size_str": "39.5 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "2024-09-01_Правила_общения_с_клиентами.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/04_Стандарты_и_правила_продаж/2024-09-01_Правила_общения_с_клиентами.docx", "size": 51063, "size_str": "49.9 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "2024-11-13_ИП_Правила_работы_с_колл-центром_и_звонарями.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/04_Стандарты_и_правила_продаж/2024-11-13_ИП_Правила_работы_с_колл-центром_и_звонарями.docx", "size": 40319, "size_str": "39.4 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "ИП_Правила_постановки_контроля_и_переноса_квот_по_продажам_Европа.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/04_Стандарты_и_правила_продаж/ИП_Правила_постановки_контроля_и_переноса_квот_по_продажам_Европа.docx", "size": 33849, "size_str": "33.1 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "Инструкция_Перечень_документов_для_СТ1_и_ЕВРО1_(ВЭД).docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/04_Стандарты_и_правила_продаж/Инструкция_Перечень_документов_для_СТ1_и_ЕВРО1_(ВЭД).docx", "size": 30961, "size_str": "30.2 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "Инструкция_Правила_хранения_товаров.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/04_Стандарты_и_правила_продаж/Инструкция_Правила_хранения_товаров.docx", "size": 9013, "size_str": "8.8 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "Инструкция_образец.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/04_Стандарты_и_правила_продаж/Инструкция_образец.docx", "size": 1066572, "size_str": "1.0 MB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "Инструкция_по_расчету_стандартного_Биг-Бега_и_Q-бег.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/04_Стандарты_и_правила_продаж/Инструкция_по_расчету_стандартного_Биг-Бега_и_Q-бег.docx", "size": 1000726, "size_str": "977.3 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "Обучение_отдела_продаж_лекция.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/04_Стандарты_и_правила_продаж/Обучение_отдела_продаж_лекция.docx", "size": 216520, "size_str": "211.4 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "Правила_взаимодействия_по_поиску_и_подключению_агентов_-_партнёров,_а_так_же_условия_сотрудничества.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/04_Стандарты_и_правила_продаж/Правила_взаимодействия_по_поиску_и_подключению_агентов_-_партнёров,_а_так_же_условия_сотрудничества.docx", "size": 13133, "size_str": "12.8 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "Стандарт_общения_с_клиентом_ред1_от_19.08.19.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/04_Стандарты_и_правила_продаж/Стандарт_общения_с_клиентом_ред1_от_19.08.19.docx", "size": 23301, "size_str": "22.8 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "2020-01-31_Инструкция_по_внесению_номенклатуры_в_1С_Известняк.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/03_Инструкции_по_1С_и_CRM/2020-01-31_Инструкция_по_внесению_номенклатуры_в_1С_Известняк.docx", "size": 59339, "size_str": "57.9 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "2023-10-06_ИП_Правила_ведения_CRM_менеджерами_по_продажам.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/03_Инструкции_по_1С_и_CRM/2023-10-06_ИП_Правила_ведения_CRM_менеджерами_по_продажам.docx", "size": 33320, "size_str": "32.5 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "2026-04-14_ИП_Правила_проведения_документов_в_базе_Европа_продаж_с_Украины.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/03_Инструкции_по_1С_и_CRM/2026-04-14_ИП_Правила_проведения_документов_в_базе_Европа_продаж_с_Украины.docx", "size": 32506, "size_str": "31.7 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "Инструкция_Как_правильно_создавать_заказ_в_1С_с_корректной_номенклатурой.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/03_Инструкции_по_1С_и_CRM/Инструкция_Как_правильно_создавать_заказ_в_1С_с_корректной_номенклатурой.docx", "size": 7457, "size_str": "7.3 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "Инструкция_ПО_СОЗДАНИЮ_В_1С_НОМЕНКЛАТУРЫ.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/03_Инструкции_по_1С_и_CRM/Инструкция_ПО_СОЗДАНИЮ_В_1С_НОМЕНКЛАТУРЫ.docx", "size": 661707, "size_str": "646.2 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "Инструкция_РО4_Европа_по_созданию_и_ведению_номенклатуры_в_1С_Европа.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/03_Инструкции_по_1С_и_CRM/Инструкция_РО4_Европа_по_созданию_и_ведению_номенклатуры_в_1С_Европа.docx", "size": 1594545, "size_str": "1.5 MB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "Инструкция_по_1С_для_менеджера.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/03_Инструкции_по_1С_и_CRM/Инструкция_по_1С_для_менеджера.docx", "size": 896802, "size_str": "875.8 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "Инструкция_формирования_заказа_покупателя_в_1С_ВЭД.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/03_Инструкции_по_1С_и_CRM/Инструкция_формирования_заказа_покупателя_в_1С_ВЭД.docx", "size": 792317, "size_str": "773.7 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "00_Отчёт_ГД_Румыния.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/00_Отчёт_ГД_Румыния.docx", "size": 44356, "size_str": "43.3 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "00_Отчёт_ГД_Румыния.pdf", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/00_Отчёт_ГД_Румыния.pdf", "size": 75963, "size_str": "74.2 KB", "ext": ".pdf", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "01_Розничные_продажи_Румыния.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/01_Розничные_продажи_Румыния.docx", "size": 92486, "size_str": "90.3 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "01_Розничные_продажи_Румыния.pdf", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/01_Розничные_продажи_Румыния.pdf", "size": 193092, "size_str": "188.6 KB", "ext": ".pdf", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "02_VIP_продажи_Румыния.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/02_VIP_продажи_Румыния.docx", "size": 107483, "size_str": "105.0 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "02_VIP_продажи_Румыния.pdf", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/02_VIP_продажи_Румыния.pdf", "size": 179257, "size_str": "175.1 KB", "ext": ".pdf", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "03_Работа_менеджера_Ботя.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/03_Работа_менеджера_Ботя.docx", "size": 44835, "size_str": "43.8 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "03_Работа_менеджера_Ботя.pdf", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/03_Работа_менеджера_Ботя.pdf", "size": 90702, "size_str": "88.6 KB", "ext": ".pdf", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "04_Склад_Румыния.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/04_Склад_Румыния.docx", "size": 115348, "size_str": "112.6 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "04_Склад_Румыния.pdf", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/04_Склад_Румыния.pdf", "size": 177733, "size_str": "173.6 KB", "ext": ".pdf", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "05_Номенклатура_и_товарные_предложения.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/05_Номенклатура_и_товарные_предложения.docx", "size": 46502, "size_str": "45.4 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "05_Номенклатура_и_товарные_предложения.pdf", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/05_Номенклатура_и_товарные_предложения.pdf", "size": 115631, "size_str": "112.9 KB", "ext": ".pdf", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "06_Стратегия_Румыния_2027.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/06_Стратегия_Румыния_2027.docx", "size": 74118, "size_str": "72.4 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "06_Стратегия_Румыния_2027.pdf", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/06_Стратегия_Румыния_2027.pdf", "size": 191684, "size_str": "187.2 KB", "ext": ".pdf", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "07_Программа_и_задачи_Битрикс.docx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/07_Программа_и_задачи_Битрикс.docx", "size": 42973, "size_str": "42.0 KB", "ext": ".docx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "07_Программа_и_задачи_Битрикс.pdf", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/07_Программа_и_задачи_Битрикс.pdf", "size": 74582, "size_str": "72.8 KB", "ext": ".pdf", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "08_Данные_и_программа.xlsx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/08_Данные_и_программа.xlsx", "size": 230783, "size_str": "225.4 KB", "ext": ".xlsx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "09_Задачи_Битрикс.csv", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/09_Задачи_Битрикс.csv", "size": 23790, "size_str": "23.2 KB", "ext": ".csv", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "09_Задачи_Битрикс.json", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/09_Задачи_Битрикс.json", "size": 39351, "size_str": "38.4 KB", "ext": ".json", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "10_Как_использовать_задачи.txt", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/10_Как_использовать_задачи.txt", "size": 1894, "size_str": "1.8 KB", "ext": ".txt", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "Начать.html", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/Начать.html", "size": 31427, "size_str": "30.7 KB", "ext": ".html", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "Состав_пакета.json", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/Состав_пакета.json", "size": 6984, "size_str": "6.8 KB", "ext": ".json", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "VBA_BG_Seller_10_Cards_v1.1.pdf", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/01_Болгария_Обучение_продавца/VBA_BG_Seller_10_Cards_v1.1.pdf", "size": 4094634, "size_str": "3.9 MB", "ext": ".pdf", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "VBA_Болгария_обучение_продавца_в_10_карточках.pptx", "path": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/01_Болгария_Обучение_продавца/VBA_Болгария_обучение_продавца_в_10_карточках.pptx", "size": 3844319, "size_str": "3.7 MB", "ext": ".pptx", "tags": ["Стенограммы", "Протоколы", "Встречи"], "category": "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ"}, {"name": "00_README_Обучение.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/00_README_Обучение.md", "size": 2656, "size_str": "2.6 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "01_Правила_для_студентов.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/01_Правила_для_студентов.md", "size": 7184, "size_str": "7.0 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "01_Правила_для_студентов_12_правил.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/01_Правила_для_студентов_12_правил.md", "size": 3535, "size_str": "3.5 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "02_Первая_помеха_в_обучении.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/02_Первая_помеха_в_обучении.md", "size": 5995, "size_str": "5.9 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "03_Отсутствие_массы.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/03_Отсутствие_массы.md", "size": 7147, "size_str": "7.0 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "04_Крутой_градиент.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/04_Крутой_градиент.md", "size": 6047, "size_str": "5.9 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "05_Непонятое_слово.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/05_Непонятое_слово.md", "size": 8574, "size_str": "8.4 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "05_Обмен_с_превышением.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/05_Обмен_с_превышением.md", "size": 4394, "size_str": "4.3 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "06_Как_прояснять_слова.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/06_Как_прояснять_слова.md", "size": 8204, "size_str": "8.0 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "07_Использование_демонстрации.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/07_Использование_демонстрации.md", "size": 5413, "size_str": "5.3 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "08_Демонстрация_зарисовка.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/08_Демонстрация_зарисовка.md", "size": 4454, "size_str": "4.3 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "09_Роль_инструктора.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/09_Роль_инструктора.md", "size": 8106, "size_str": "7.9 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "10_Работа_в_паре.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/10_Работа_в_паре.md", "size": 8698, "size_str": "8.5 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "2021-11-10_ИП_Правила_внутреннего_обучения_на_онлайн_платформе.docx", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/2021-11-10_ИП_Правила_внутреннего_обучения_на_онлайн_платформе.docx", "size": 351648, "size_str": "343.4 KB", "ext": ".docx", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Демонстрация_обмена_статус.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/Демонстрация_обмена_статус.md", "size": 1942, "size_str": "1.9 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Материалы_к_курсу_Технология_Обучения.docx", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/Материалы_к_курсу_Технология_Обучения.docx", "size": 13974, "size_str": "13.6 KB", "ext": ".docx", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Ответы_по_технологии_обучения.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/Ответы_по_технологии_обучения.md", "size": 9757, "size_str": "9.5 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Прояснение_слова_градиент.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/Прояснение_слова_градиент.md", "size": 3013, "size_str": "2.9 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Словарь_по_источникам.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/Словарь_по_источникам.md", "size": 4444, "size_str": "4.3 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Технология_обучения_Материалы_оригинал.docx", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Курс_Технология_Обучения/Технология_обучения_Материалы_оригинал.docx", "size": 13974, "size_str": "13.6 KB", "ext": ".docx", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video01_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video01_sub.ru-orig.vtt", "size": 808308, "size_str": "789.4 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video02_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video02_sub.ru-orig.vtt", "size": 245061, "size_str": "239.3 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video03_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video03_sub.ru-orig.vtt", "size": 76988, "size_str": "75.2 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video04_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video04_sub.ru-orig.vtt", "size": 71439, "size_str": "69.8 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video05_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video05_sub.ru-orig.vtt", "size": 87668, "size_str": "85.6 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video06_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video06_sub.ru-orig.vtt", "size": 42469, "size_str": "41.5 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video07_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video07_sub.ru-orig.vtt", "size": 90973, "size_str": "88.8 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video08_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video08_sub.ru-orig.vtt", "size": 101422, "size_str": "99.0 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video09_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video09_sub.ru-orig.vtt", "size": 29759, "size_str": "29.1 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video10_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video10_sub.ru-orig.vtt", "size": 29471, "size_str": "28.8 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video11_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video11_sub.ru-orig.vtt", "size": 56924, "size_str": "55.6 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video12_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video12_sub.ru-orig.vtt", "size": 83263, "size_str": "81.3 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video13_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video13_sub.ru-orig.vtt", "size": 123067, "size_str": "120.2 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video14_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video14_sub.ru-orig.vtt", "size": 124050, "size_str": "121.1 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video15_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video15_sub.ru-orig.vtt", "size": 41113, "size_str": "40.1 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video16_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video16_sub.ru-orig.vtt", "size": 131090, "size_str": "128.0 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video17_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video17_sub.ru-orig.vtt", "size": 47496, "size_str": "46.4 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video18_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video18_sub.ru-orig.vtt", "size": 102862, "size_str": "100.5 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video19_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video19_sub.ru-orig.vtt", "size": 70173, "size_str": "68.5 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video20_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video20_sub.ru-orig.vtt", "size": 73708, "size_str": "72.0 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video21_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video21_sub.ru-orig.vtt", "size": 75304, "size_str": "73.5 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video22_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video22_sub.ru-orig.vtt", "size": 103749, "size_str": "101.3 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "video23_sub.ru-orig.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/video23_sub.ru-orig.vtt", "size": 75050, "size_str": "73.3 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_01_Правила_для_студентов.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_01_Правила_для_студентов.vtt", "size": 808308, "size_str": "789.4 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_02_Первая_помеха_в_обучении.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_02_Первая_помеха_в_обучении.vtt", "size": 245061, "size_str": "239.3 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_03_Отсутствие_массы.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_03_Отсутствие_массы.vtt", "size": 76988, "size_str": "75.2 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_04_Крутой_градиент.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_04_Крутой_градиент.vtt", "size": 71439, "size_str": "69.8 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_05_Непонятое_слово.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_05_Непонятое_слово.vtt", "size": 87668, "size_str": "85.6 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_06_Как_прояснять_слова.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_06_Как_прояснять_слова.vtt", "size": 42469, "size_str": "41.5 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_07_Использование_демонстрации.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_07_Использование_демонстрации.vtt", "size": 90973, "size_str": "88.8 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_08_Демонстрация_зарисовка.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_08_Демонстрация_зарисовка.vtt", "size": 101422, "size_str": "99.0 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_09_Роль_инструктора.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_09_Роль_инструктора.vtt", "size": 29759, "size_str": "29.1 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_10_Работа_в_паре.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_10_Работа_в_паре.vtt", "size": 29471, "size_str": "28.8 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_11_ЦКП_Определение_ЦКП.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_11_ЦКП_Определение_ЦКП.vtt", "size": 56924, "size_str": "55.6 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_12_ЦКП_ЦКП_компании.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_12_ЦКП_ЦКП_компании.vtt", "size": 83263, "size_str": "81.3 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_13_ЦКП_ЦКП_руководителя.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_13_ЦКП_ЦКП_руководителя.vtt", "size": 123067, "size_str": "120.2 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_14_ЦКП_Виды_обмена.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_14_ЦКП_Виды_обмена.vtt", "size": 124050, "size_str": "121.1 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_15_ЦКП_Обмен_с_превышением.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_15_ЦКП_Обмен_с_превышением.vtt", "size": 41113, "size_str": "40.1 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_16_Инструменты_управления_Часть1.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_16_Инструменты_управления_Часть1.vtt", "size": 131090, "size_str": "128.0 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_17_Инструменты_управления_Часть2.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_17_Инструменты_управления_Часть2.vtt", "size": 47496, "size_str": "46.4 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_18_Инструменты_управления_Часть3.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_18_Инструменты_управления_Часть3.vtt", "size": 102862, "size_str": "100.5 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_19_ЕП_Планирование_Часть1.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_19_ЕП_Планирование_Часть1.vtt", "size": 70173, "size_str": "68.5 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_20_ЕП_Боевой_план.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_20_ЕП_Боевой_план.vtt", "size": 73708, "size_str": "72.0 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_21_ЕП_Статистики_и_квоты.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_21_ЕП_Статистики_и_квоты.vtt", "size": 75304, "size_str": "73.5 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_22_ЕП_Продукты_и_время.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_22_ЕП_Продукты_и_время.vtt", "size": 103749, "size_str": "101.3 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Видеоурок_23_ЕП_Согласование_и_контроль.vtt", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/02_Видеоуроки_Субтитры_VTT/Видеоурок_23_ЕП_Согласование_и_контроль.vtt", "size": 75050, "size_str": "73.3 KB", "ext": ".vtt", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "00_ОБЗОР_КУРСОВ_И_АРХИВА.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/03_Транскрипты_и_Саммари/00_ОБЗОР_КУРСОВ_И_АРХИВА.md", "size": 9419, "size_str": "9.2 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "summary_video11.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/03_Транскрипты_и_Саммари/summary_video11.md", "size": 8106, "size_str": "7.9 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "summary_video12.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/03_Транскрипты_и_Саммари/summary_video12.md", "size": 8698, "size_str": "8.5 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "summary_video13.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/03_Транскрипты_и_Саммари/summary_video13.md", "size": 7331, "size_str": "7.2 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "summary_video14.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/03_Транскрипты_и_Саммари/summary_video14.md", "size": 7835, "size_str": "7.7 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "summary_video15.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/03_Транскрипты_и_Саммари/summary_video15.md", "size": 4819, "size_str": "4.7 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "summary_video16.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/03_Транскрипты_и_Саммари/summary_video16.md", "size": 6424, "size_str": "6.3 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "summary_video17.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/03_Транскрипты_и_Саммари/summary_video17.md", "size": 4394, "size_str": "4.3 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "summary_video18.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/03_Транскрипты_и_Саммари/summary_video18.md", "size": 5853, "size_str": "5.7 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "summary_video19.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/03_Транскрипты_и_Саммари/summary_video19.md", "size": 4838, "size_str": "4.7 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "summary_video20.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/03_Транскрипты_и_Саммари/summary_video20.md", "size": 3508, "size_str": "3.4 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "summary_video21.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/03_Транскрипты_и_Саммари/summary_video21.md", "size": 3472, "size_str": "3.4 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "summary_video22.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/03_Транскрипты_и_Саммари/summary_video22.md", "size": 3794, "size_str": "3.7 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "summary_video23.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/03_Транскрипты_и_Саммари/summary_video23.md", "size": 4194, "size_str": "4.1 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "Полная_транскрипция_всех_видеоуроков.md", "path": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/03_Транскрипты_и_Саммари/Полная_транскрипция_всех_видеоуроков.md", "size": 124842, "size_str": "121.9 KB", "ext": ".md", "tags": ["Обучение", "Регламенты", "VTT"], "category": "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ"}, {"name": "00_ОПИСЬ_И_РЕЕСТР_СТЕНОГРАММ_И_ПРОТОКОЛОВ.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/00_ОПИСЬ_И_РЕЕСТР_СТЕНОГРАММ_И_ПРОТОКОЛОВ.md", "size": 12343, "size_str": "12.1 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "01_Протокол_Координация_11-32_2ч_56м.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/01_Протокол_Координация_11-32_2ч_56м.md", "size": 11098, "size_str": "10.8 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "01_Транскрипт_Координация_11-32_Полный_текст.txt", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/01_Транскрипт_Координация_11-32_Полный_текст.txt", "size": 230139, "size_str": "224.7 KB", "ext": ".txt", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "02_Протокол_Координация_13-03_1ч_04м.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/02_Протокол_Координация_13-03_1ч_04м.md", "size": 7511, "size_str": "7.3 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "02_Транскрипт_Координация_13-03_Полный_текст.txt", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/02_Транскрипт_Координация_13-03_Полный_текст.txt", "size": 81340, "size_str": "79.4 KB", "ext": ".txt", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "03_Интервью_Дмитрия_Боти_01.10.2026_Хронометраж.txt", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/03_Интервью_Дмитрия_Боти_01.10.2026_Хронометраж.txt", "size": 54186, "size_str": "52.9 KB", "ext": ".txt", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "04_Рабочая_встреча_08.10.2026_Транскрипт.txt", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/04_Рабочая_встреча_08.10.2026_Транскрипт.txt", "size": 65749, "size_str": "64.2 KB", "ext": ".txt", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "05_Основания_выводов_E01-E38_Транскрибации.txt", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/05_Основания_выводов_E01-E38_Транскрибации.txt", "size": 33114, "size_str": "32.3 KB", "ext": ".txt", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Friday, October 16th, 2026 _ Transcription Export (1).md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Friday, October 16th, 2026 _ Transcription Export (1).md", "size": 104758, "size_str": "102.3 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Friday, October 16th, 2026 _ Transcription Export (2).md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Friday, October 16th, 2026 _ Transcription Export (2).md", "size": 65954, "size_str": "64.4 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Friday, October 16th, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Friday, October 16th, 2026 _ Transcription Export.md", "size": 173619, "size_str": "169.5 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Friday, October 23rd, 2026 _ Transcription Export (1).md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Friday, October 23rd, 2026 _ Transcription Export (1).md", "size": 28604, "size_str": "27.9 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Friday, October 23rd, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Friday, October 23rd, 2026 _ Transcription Export.md", "size": 69544, "size_str": "67.9 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Friday, October 30th, 2026 _ Transcription Export (1).md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Friday, October 30th, 2026 _ Transcription Export (1).md", "size": 92325, "size_str": "90.2 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Friday, October 30th, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Friday, October 30th, 2026 _ Transcription Export.md", "size": 65906, "size_str": "64.4 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Friday, October 9th, 2026 _ Transcription Export (1).md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Friday, October 9th, 2026 _ Transcription Export (1).md", "size": 108026, "size_str": "105.5 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Friday, October 9th, 2026 _ Transcription Export (2).md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Friday, October 9th, 2026 _ Transcription Export (2).md", "size": 114817, "size_str": "112.1 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Friday, October 9th, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Friday, October 9th, 2026 _ Transcription Export.md", "size": 51370, "size_str": "50.2 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Monday, October 12th, 2026 _ Transcription Export (1).md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Monday, October 12th, 2026 _ Transcription Export (1).md", "size": 119845, "size_str": "117.0 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Monday, October 12th, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Monday, October 12th, 2026 _ Transcription Export.md", "size": 96024, "size_str": "93.8 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Monday, October 19th, 2026 _ Transcription Export (1).md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Monday, October 19th, 2026 _ Transcription Export (1).md", "size": 132130, "size_str": "129.0 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Monday, October 19th, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Monday, October 19th, 2026 _ Transcription Export.md", "size": 97694, "size_str": "95.4 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Monday, October 26th, 2026 _ Transcription Export (1).md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Monday, October 26th, 2026 _ Transcription Export (1).md", "size": 96642, "size_str": "94.4 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Monday, October 26th, 2026 _ Transcription Export (2).md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Monday, October 26th, 2026 _ Transcription Export (2).md", "size": 49378, "size_str": "48.2 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Monday, October 26th, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Monday, October 26th, 2026 _ Transcription Export.md", "size": 93751, "size_str": "91.6 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Monday, October 5th, 2026 _ Transcription Export (1).md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Monday, October 5th, 2026 _ Transcription Export (1).md", "size": 25955, "size_str": "25.3 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Monday, October 5th, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Monday, October 5th, 2026 _ Transcription Export.md", "size": 70607, "size_str": "69.0 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Thursday, October 15th, 2026 _ Tasks Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Thursday, October 15th, 2026 _ Tasks Export.md", "size": 8362, "size_str": "8.2 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Thursday, October 15th, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Thursday, October 15th, 2026 _ Transcription Export.md", "size": 101175, "size_str": "98.8 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Thursday, October 22nd, 2026 _ Transcription Export (1).md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Thursday, October 22nd, 2026 _ Transcription Export (1).md", "size": 209281, "size_str": "204.4 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Thursday, October 22nd, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Thursday, October 22nd, 2026 _ Transcription Export.md", "size": 26852, "size_str": "26.2 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Thursday, October 29th, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Thursday, October 29th, 2026 _ Transcription Export.md", "size": 96571, "size_str": "94.3 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Thursday, October 8th, 2026 _ Transcription Export (1).md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Thursday, October 8th, 2026 _ Transcription Export (1).md", "size": 83023, "size_str": "81.1 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Thursday, October 8th, 2026 _ Transcription Export (2).md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Thursday, October 8th, 2026 _ Transcription Export (2).md", "size": 68591, "size_str": "67.0 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Thursday, October 8th, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Thursday, October 8th, 2026 _ Transcription Export.md", "size": 97587, "size_str": "95.3 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Tuesday, October 13th, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Tuesday, October 13th, 2026 _ Transcription Export.md", "size": 105434, "size_str": "103.0 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Tuesday, October 20th, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Tuesday, October 20th, 2026 _ Transcription Export.md", "size": 14986, "size_str": "14.6 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Tuesday, October 27th, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Tuesday, October 27th, 2026 _ Transcription Export.md", "size": 75878, "size_str": "74.1 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Tuesday, October 6th, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Tuesday, October 6th, 2026 _ Transcription Export.md", "size": 213599, "size_str": "208.6 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Wednesday, October 14th, 2026 _ Transcription Export (1).md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Wednesday, October 14th, 2026 _ Transcription Export (1).md", "size": 60891, "size_str": "59.5 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Wednesday, October 14th, 2026 _ Transcription Export (2).md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Wednesday, October 14th, 2026 _ Transcription Export (2).md", "size": 48992, "size_str": "47.8 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Wednesday, October 14th, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Wednesday, October 14th, 2026 _ Transcription Export.md", "size": 101027, "size_str": "98.7 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Wednesday, October 21st, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Wednesday, October 21st, 2026 _ Transcription Export.md", "size": 62616, "size_str": "61.1 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Wednesday, October 28th, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Wednesday, October 28th, 2026 _ Transcription Export.md", "size": 90022, "size_str": "87.9 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Wednesday, October 7th, 2026 _ Transcription Export (1).md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Wednesday, October 7th, 2026 _ Transcription Export (1).md", "size": 108382, "size_str": "105.8 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "Meeting _ Wednesday, October 7th, 2026 _ Transcription Export.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/Meeting _ Wednesday, October 7th, 2026 _ Transcription Export.md", "size": 125791, "size_str": "122.8 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T01_30.09.2026_Обсуждение_1С.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T01_30.09.2026_Обсуждение_1С.md", "size": 66617, "size_str": "65.1 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T02_30.09.2026_Координация_с_Расиным.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T02_30.09.2026_Координация_с_Расиным.md", "size": 27552, "size_str": "26.9 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T03_01.10.2026_Интервью_Дмитрия_Боти.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T03_01.10.2026_Интервью_Дмитрия_Боти.md", "size": 54566, "size_str": "53.3 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T04_02.10.2026_Координация_с_Авдеевым_часть_1.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T04_02.10.2026_Координация_с_Авдеевым_часть_1.md", "size": 236669, "size_str": "231.1 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T05_02.10.2026_Координация_с_Авдеевым_часть_2.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T05_02.10.2026_Координация_с_Авдеевым_часть_2.md", "size": 83931, "size_str": "82.0 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T06_07.10.2026_Передача_должности_Авдеевым.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T06_07.10.2026_Передача_должности_Авдеевым.md", "size": 120680, "size_str": "117.9 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T07_07.10.2026_Координация.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T07_07.10.2026_Координация.md", "size": 102926, "size_str": "100.5 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T08_08.10.2026_Утренняя_координация.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T08_08.10.2026_Утренняя_координация.md", "size": 91120, "size_str": "89.0 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T09_08.10.2026_Обсуждение_с_Дмитрием_Ботей.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T09_08.10.2026_Обсуждение_с_Дмитрием_Ботей.md", "size": 78862, "size_str": "77.0 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T10_08.10.2026_Рабочая_встреча.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T10_08.10.2026_Рабочая_встреча.md", "size": 65544, "size_str": "64.0 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T11_09.10.2026_Координация.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T11_09.10.2026_Координация.md", "size": 48743, "size_str": "47.6 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T12_09.10.2026_Маркетинг_и_учёт_результатов.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T12_09.10.2026_Маркетинг_и_учёт_результатов.md", "size": 101410, "size_str": "99.0 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T13_09.10.2026_Склад_и_инвентаризация.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T13_09.10.2026_Склад_и_инвентаризация.md", "size": 105432, "size_str": "103.0 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T14_12.10.2026_Утренняя_координация_09-33_10-36.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T14_12.10.2026_Утренняя_координация_09-33_10-36.md", "size": 88774, "size_str": "86.7 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T15_12.10.2026_Передача_процессов_13-29_15-12.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T15_12.10.2026_Передача_процессов_13-29_15-12.md", "size": 111905, "size_str": "109.3 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T16_13.10.2026_Утренняя_координация.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T16_13.10.2026_Утренняя_координация.md", "size": 97722, "size_str": "95.4 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T17_13.10.2026_Обучение_планированию_и_ГСД.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T17_13.10.2026_Обучение_планированию_и_ГСД.md", "size": 91072, "size_str": "88.9 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T18_14.10.2026_Утренняя_координация.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T18_14.10.2026_Утренняя_координация.md", "size": 92988, "size_str": "90.8 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T19_14.10.2026_Подрядчик_Google_Ads_14-40.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T19_14.10.2026_Подрядчик_Google_Ads_14-40.md", "size": 46910, "size_str": "45.8 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T20_14.10.2026_Разработчик_бота_12-37.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T20_14.10.2026_Разработчик_бота_12-37.md", "size": 58297, "size_str": "56.9 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T21_15.10.2026_Координация_клиенты_склад_цены_и_доставка.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T21_15.10.2026_Координация_клиенты_склад_цены_и_доставка.md", "size": 42266, "size_str": "41.3 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T25_16-10_Бот_Геннадий_СОХРАНЕННЫЕ_ФРАГМЕНТЫ.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T25_16-10_Бот_Геннадий_СОХРАНЕННЫЕ_ФРАГМЕНТЫ.md", "size": 9797, "size_str": "9.6 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T34_Расин_21-10_методика_сроки_приоритеты_ОРИГИНАЛ.txt", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T34_Расин_21-10_методика_сроки_приоритеты_ОРИГИНАЛ.txt", "size": 60892, "size_str": "59.5 KB", "ext": ".txt", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T36_Ходичев_22-10_доступы_телефония_1С_ОРИГИНАЛ.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T36_Ходичев_22-10_доступы_телефония_1С_ОРИГИНАЛ.md", "size": 209281, "size_str": "204.4 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T37_2026-10-23_Утренняя_координация_ОРИГИНАЛ.md", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T37_2026-10-23_Утренняя_координация_ОРИГИНАЛ.md", "size": 69544, "size_str": "67.9 KB", "ext": ".md", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "T38_Расин_22-10_ТЕКСТ_ИЗ_СООБЩЕНИЯ.txt", "path": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T38_Расин_22-10_ТЕКСТ_ИЗ_СООБЩЕНИЯ.txt", "size": 7790, "size_str": "7.6 KB", "ext": ".txt", "tags": ["Маркетинг", "Скрипты", "Продажи"], "category": "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ"}, {"name": "01_Скрипт_установки_VBA_Codex_install.sh", "path": "11_ВБА_КОДЕКС_И_OPERATIONS_PLATFORM/01_Скрипт_установки_VBA_Codex_install.sh", "size": 10467, "size_str": "10.2 KB", "ext": ".sh", "tags": ["Codex", "Платформа", "Архитектура"], "category": "11_ВБА_КОДЕКС_И_OPERATIONS_PLATFORM"}, {"name": "02_Промпт_для_Codex_Desktop.md", "path": "11_ВБА_КОДЕКС_И_OPERATIONS_PLATFORM/02_Промпт_для_Codex_Desktop.md", "size": 7298, "size_str": "7.1 KB", "ext": ".md", "tags": ["Codex", "Платформа", "Архитектура"], "category": "11_ВБА_КОДЕКС_И_OPERATIONS_PLATFORM"}, {"name": "03_Периоды_рекламы_Болгария_GoogleAds.csv", "path": "11_ВБА_КОДЕКС_И_OPERATIONS_PLATFORM/03_Периоды_рекламы_Болгария_GoogleAds.csv", "size": 1514, "size_str": "1.5 KB", "ext": ".csv", "tags": ["Codex", "Платформа", "Архитектура"], "category": "11_ВБА_КОДЕКС_И_OPERATIONS_PLATFORM"}, {"name": "04_VBA_Operations_Platform_v5_3_Архив.zip", "path": "11_ВБА_КОДЕКС_И_OPERATIONS_PLATFORM/04_VBA_Operations_Platform_v5_3_Архив.zip", "size": 138249, "size_str": "135.0 KB", "ext": ".zip", "tags": ["Codex", "Платформа", "Архитектура"], "category": "11_ВБА_КОДЕКС_И_OPERATIONS_PLATFORM"}, {"name": "05_VBA_Codex_Bootstrap_v0_1_Исходный_архив.zip", "path": "11_ВБА_КОДЕКС_И_OPERATIONS_PLATFORM/05_VBA_Codex_Bootstrap_v0_1_Исходный_архив.zip", "size": 178710, "size_str": "174.5 KB", "ext": ".zip", "tags": ["Codex", "Платформа", "Архитектура"], "category": "11_ВБА_КОДЕКС_И_OPERATIONS_PLATFORM"}, {"name": "00_ОПИСЬ_МЕДИАФАЙЛОВ.md", "path": "04_АУДИО_И_ВИДЕО_ПЕРВОИСТОЧНИКИ/00_ОПИСЬ_МЕДИАФАЙЛОВ.md", "size": 1164, "size_str": "1.1 KB", "ext": ".md", "tags": ["Шляпы_Постов", "Инструкции", "Оргструктура"], "category": "04_АУДИО_И_ВИДЕО_ПЕРВОИСТОЧНИКИ"}, {"name": "01_Аудио_Координация_11-32_02.10.2026_Полная_запись.mp3", "path": "04_АУДИО_И_ВИДЕО_ПЕРВОИСТОЧНИКИ/01_Аудио_Координация_11-32_02.10.2026_Полная_запись.mp3", "size": 169384704, "size_str": "161.5 MB", "ext": ".mp3", "tags": ["Шляпы_Постов", "Инструкции", "Оргструктура"], "category": "04_АУДИО_И_ВИДЕО_ПЕРВОИСТОЧНИКИ"}, {"name": "01b_Аудио_Координация_13-03_02.10.2026_Полная_запись.mp3", "path": "04_АУДИО_И_ВИДЕО_ПЕРВОИСТОЧНИКИ/01b_Аудио_Координация_13-03_02.10.2026_Полная_запись.mp3", "size": 62293632, "size_str": "59.4 MB", "ext": ".mp3", "tags": ["Шляпы_Постов", "Инструкции", "Оргструктура"], "category": "04_АУДИО_И_ВИДЕО_ПЕРВОИСТОЧНИКИ"}, {"name": "02_Аудио_Рабочий_созвон_21.10.2026_Часть_1.mp3", "path": "04_АУДИО_И_ВИДЕО_ПЕРВОИСТОЧНИКИ/02_Аудио_Рабочий_созвон_21.10.2026_Часть_1.mp3", "size": 1643136, "size_str": "1.6 MB", "ext": ".mp3", "tags": ["Шляпы_Постов", "Инструкции", "Оргструктура"], "category": "04_АУДИО_И_ВИДЕО_ПЕРВОИСТОЧНИКИ"}, {"name": "03_Аудио_Рабочий_созвон_21.10.2026_Часть_2.mp3", "path": "04_АУДИО_И_ВИДЕО_ПЕРВОИСТОЧНИКИ/03_Аудио_Рабочий_созвон_21.10.2026_Часть_2.mp3", "size": 1273344, "size_str": "1.2 MB", "ext": ".mp3", "tags": ["Шляпы_Постов", "Инструкции", "Оргструктура"], "category": "04_АУДИО_И_ВИДЕО_ПЕРВОИСТОЧНИКИ"}, {"name": "03b_Аудио_Рабочий_созвон_22.10.2026.mp3", "path": "04_АУДИО_И_ВИДЕО_ПЕРВОИСТОЧНИКИ/03b_Аудио_Рабочий_созвон_22.10.2026.mp3", "size": 1827456, "size_str": "1.7 MB", "ext": ".mp3", "tags": ["Шляпы_Постов", "Инструкции", "Оргструктура"], "category": "04_АУДИО_И_ВИДЕО_ПЕРВОИСТОЧНИКИ"}, {"name": "04_Видеоурок_ВБА_Часть_1.mp4", "path": "04_АУДИО_И_ВИДЕО_ПЕРВОИСТОЧНИКИ/04_Видеоурок_ВБА_Часть_1.mp4", "size": 37150808, "size_str": "35.4 MB", "ext": ".mp4", "tags": ["Шляпы_Постов", "Инструкции", "Оргструктура"], "category": "04_АУДИО_И_ВИДЕО_ПЕРВОИСТОЧНИКИ"}, {"name": "05_Видеоурок_ВБА_Часть_2.mp4", "path": "04_АУДИО_И_ВИДЕО_ПЕРВОИСТОЧНИКИ/05_Видеоурок_ВБА_Часть_2.mp4", "size": 35375188, "size_str": "33.7 MB", "ext": ".mp4", "tags": ["Шляпы_Постов", "Инструкции", "Оргструктура"], "category": "04_АУДИО_И_ВИДЕО_ПЕРВОИСТОЧНИКИ"}];
-    const employeesData = [{"id": "avdeev", "name": "Алексей Авдеев", "title": "Администратор отдела продаж / Диспетчер координаций", "nominal_title": "«Коммерческий директор» / «РО2 ВЭД» (номинально)", "badge": "Администрация", "badge_color": "#f59e0b", "photo_symbol": "📋", "roi": "0.0x (прямой вклад в маржу отсутствует)", "metrics": {"Личные продажи": "0 шт. / 0 € маржи", "Время на координации": "8 ч/нед (AV-11) + 2.5 ч (AV-56)", "Срыв eMAG Marketplace": "74% сорвано", "Срыв переезда склада": "57% сорвано", "Доля рутины в БП": "67.2% от рабочего времени"}, "bp_summary": "Проанализировано 65 недельных бланков БП. 55 строк задач в БП от 11.10.2026. 67.2% времени уходило на сбор отчетов, координации (AV-11) и перенос задач в Битрикс24. В личные результаты приписывал отгрузки Боти и Лядского. Стратегические проекты (eMAG, склад в Брэила, сайт, войс-бот) провалены или не завершены.", "strengths": ["Педантичность в проведении регулярных созвонов и планерок", "Фиксация протоколов и задач в Битрикс24", "Лояльность процедурам административного управления"], "weaknesses": ["Полное отсутствие компетенций коммерческого директора и стратега", "Непонимание природы проектного B2B (требовал от Лядского равномерных недельных отгрузок)", "Попытка заставить входящего продавца (Ботя) делать холодные звонки", "Скрыл убыток по мешкам 55×110 см (-53.87 €), не справился с распродажей неликвидов", "Синдром человека-оркестра: занимался плагинами и камерами вместо управления продажами"], "verdict": "Не был коммерческим директором ни по факту, ни по компетенциям. Выполнял роль секретаря/администратора отдела, перегружавшего команду бюрократией и ручными табличками.", "files": ["05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T04_02.10.2026_Координация_с_Авдеевым_часть_1.md", "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T06_07.10.2026_Передача_должности_Авдеевым.md", "06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027/02_REV11_Чистая_прибыль_Авдеев_Каноническая.xlsx", "08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/02_Комплексный_аудит_и_стратегический_план_РО2.md", "08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/05_Отчет_сопоставления_двух_моделей_и_аудита_Авдеева.md"]}, {"id": "botea", "name": "Дмитрий Ботя", "title": "Inbound Closer / Фермер склада Брэила (L2)", "nominal_title": "Менеджер по продажам (Румыния)", "badge": "Продажи L2", "badge_color": "#10b981", "photo_symbol": "🎯", "roi": "16.85x (16.85 € чистой маржи на 1 € ФОТ)", "metrics": {"Факт продаж за октябрь": "10 225 биг-бэгов (123 инвойса)", "Выручка за октябрь": "100 806.38 €", "Маржинальный доход": "14 300.62 € (средняя 1.40 €/мешок)", "Супер-сделка (Вкладыши)": "+12 184.21 € маржи с рекламы Google Ads", "Органическая емкость": "1 000 – 1 300 шт./неделю"}, "bp_summary": "Ключевой продавец румынского рынка. В октябре закрыл 123 сделки на 10 225 шт. Реализовал 500 вкладышей (Liner Bags) компаниям Agropec Dionis и Global Grain. По БП: задачи по работе с VIP (AV-45) выполнены, 3PL и eMAG требуют централизованной поддержки.", "strengths": ["Идеальный конвертер входящего целевого трафика (звонки, заявки, реклама)", "Свободный румынский язык, контакт с местными фермерами и агрофирмами", "Способен дожимать крупные оптовые сделки при наличии входящего интереса", "Высочайшая рентабельность ФОТ: приносит компании свыше 14-15k € маржи в месяц"], "weaknesses": ["Околонулевая эффективность на холодных звонках (психотип 'хищника входящего трафика')", "Тонет в рутине первички (оформление счетов, накладных, адресов курьера Cargus)", "Теряет 3-4 часа в день без выделенного оператора на первичку (L1 Lead Qualifier)"], "verdict": "Главный мотор текущих коммерческих поступлений в Румынии. Требует освобождения от первичной документации через L1-диспетчера для масштабирования выручки до 150k €/мес.", "files": ["09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/04_Работа_Дмитрия_Боти_REV5.pdf", "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/01_Продажи_Ботя_1С_28.09-28.10.2026_ФАКТ.xlsx", "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/03_Работа_менеджера_Ботя.docx", "08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/01_ТЗ_и_финмодель_реструктуризации_отдела_продаж_РО2.md"]}, {"id": "lyadskiy", "name": "Андрей Лядский", "title": "Key Account Hunter / Крупные контракты B2B (L3)", "nominal_title": "Ведущий менеджер по опту / Молдова и ВЭД", "badge": "Продажи L3", "badge_color": "#6366f1", "photo_symbol": "💼", "roi": "10.93x (почти 11 € чистой маржи на 1 € ФОТ)", "metrics": {"Выполнение плана 2026": "179.6% (84 955 шт. при плане 47 291 шт.)", "Маржа за сентябрь": "9 835.21 € (8 416 шт.)", "Ключевые клиенты": "Südzucker, ViOil, Carvidon, Maestro Nut", "Стаж в компании": "Более 4 лет системной работы", "Средний цикл сделки": "14 – 45 дней (проектный B2B)"}, "bp_summary": "Ведет стратегических агропереработчиков. В БП закрывает загрузку производства Украины (AV-34: Südzucker 6000 шт.). Системно перевыполняет годовой объем (+79.6% сверх плана). Задачи по таможенной базе и вайберу вторичны по отношению к прямым контрактам.", "strengths": ["Пул личных связей с первыми лицами и директорами заводов", "Умение вести длинные проектные переговоры на сотни тысяч евро", "Стабильное перевыполнение годовых планов компании", "Обеспечивает базовую загрузку украинского швейного производства"], "weaknesses": ["Нельзя нагружать розничным операционным потоком (10-20 мешков)", "Неравномерность недельных отгрузок из-за проектных циклов заводов"], "verdict": "Тяжелая B2B-артиллерия компании. Должен быть полностью сфокусирован на годовых тендерах и холдингах без отвлечения на складскую текучку.", "files": ["08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/02_Комплексный_аудит_и_стратегический_план_РО2.md", "06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027/04_ПЗП_RO_MD_Сверка_ФП1.xlsx", "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/03_Опт_VIP_Румыния_REV3.pdf"]}, {"id": "rasin", "name": "Александр Расин", "title": "Руководитель казначейства и финансового планирования", "nominal_title": "Финансовый директор / Ответственный за ФП1", "badge": "Финансы", "badge_color": "#0ea5e9", "photo_symbol": "💳", "roi": "Контроль 100% ликвидности компании", "metrics": {"Погашение долга Agropec": "210 540 RON (100% закрыто в ING Bank)", "Остаток дебиторки Румыния": "61 108.62 RON (~12.3k €)", "Модель планирования": "ФП1 Расина (Директивы, фонды, ПЗП)", "Банковский контур": "ING Bank Romania (VBA TG BAG SRL)"}, "bp_summary": "Обеспечивает строгое соблюдение финансовой методологии Мороза. Контролирует распределение маржи по фондам, казначейские платежи поставщикам в Индию и Турцию. Подтвердил выпиской ING Bank нулевое сальдо долга крупнейшего дебитора Agropec Dionis.", "strengths": ["Высокая финансовая дисциплина и точность учета", "Полная прозрачность распределения валового дохода по фондам", "Надежный контроль банковских выписок и валютного контроля"], "weaknesses": ["Зависимость от своевременности первичных документов из Румынии"], "verdict": "Финансовый фундамент компании. Гарантирует устойчивость расчетов и отсутствие кассовых разрывов.", "files": ["06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027/03_FP1_Финансовое_планирование_Расин.xlsx", "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/01_ING_Bank_Выписка_28-10-2026_VBA_TG_BAG_SRL.pdf", "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/05_Себестоимость_и_финансы/2015-06-11_Регламент_по_финансовому_планированию.docx"]}, {"id": "ampilogov", "name": "Дмитрий Ампилогов", "title": "Координатор логистики и складских поставок", "nominal_title": "Менеджер логистики и ВЭД-снабжения", "badge": "Логистика", "badge_color": "#8b5cf6", "photo_symbol": "🚚", "roi": "Бесперебойность поставок хаба Брэила", "metrics": {"Центральный склад": "г. Брэила (Brăila), Румыния", "Канал поставки Индия": "Контейнеры 40ft через порт Констанца", "Канал поставки Украина": "Автотранспорт со швейного производства", "Партнер экспресс-доставки": "Cargus Courier (Румыния)"}, "bp_summary": "В БП курирует задачи AV-18 (контроль контейнеров Индии), AV-31 (перебазирование товарных остатков на склад Брэила) и AV-32 (доставка партий клиентам из Украины).", "strengths": ["Опыт работы с морскими линиями и автоперевозчиками", "Консолидация грузов на румынском складе в Брэила"], "weaknesses": ["Требуется более жесткий контроль складских актов и накладных"], "verdict": "Обеспечивает физическую доставку товара до румынского потребителя.", "files": ["10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/04_Склад_Генеральный_реестр_партий_1С.xlsx", "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/05_Склад_Брэила_Договоры_Логистика_REV3.pdf"]}, {"id": "yonash", "name": "Оксана Йонаш", "title": "Специалист по 1С и товарно-партионному учету", "nominal_title": "Оператор 1С / Бухгалтер склада", "badge": "Учет 1С", "badge_color": "#ec4899", "photo_symbol": "📊", "roi": "100% сходимость остатков склада Брэила", "metrics": {"Задачи БП": "AV-41 (актуализация остатков), AV-42 (себестоимость)", "Система учета": "1С:Предприятие 8.3 (партионный учет)", "Объем партий": "Свыше 20 партий биг-бэгов на складе Брэила"}, "bp_summary": "Отвечает за корректность списания себестоимости партий в 1С, оприходование таможенных деклараций и сверку остатков.", "strengths": ["Детальное знание механизмов партионного учета 1С", "Своевременное выявление расхождений и пересортицы"], "weaknesses": ["Высокая нагрузка при пиковых отгрузках Боти"], "verdict": "Обеспечивает бухгалтерскую и складскую достоверность экономических данных.", "files": ["10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/01_Продажи_Ботя_1С_28.09-28.10.2026_ФАКТ.xlsx", "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/04_Склад_Генеральный_реестр_партий_1С.xlsx"]}, {"id": "khodichev", "name": "Сергей Ходичев", "title": "Инженер IT-инфраструктуры и интеграций", "nominal_title": "Системный администратор / IT-специалист", "badge": "Инфраструктура IT", "badge_color": "#06b6d4", "photo_symbol": "💻", "roi": "Бесперебойность каналов связи и серверов", "metrics": {"Связанные протоколы": "T36_Ходичев_22-10_доступы_телефония_1С", "Контуры": "IP-телефония, серверы 1С, Битрикс24, доступы Google"}, "bp_summary": "Обеспечивает интеграцию телефонии с CRM, маршрутизацию румынских номеров на менеджеров, администрирование баз данных 1С.", "strengths": ["Оперативное решение технических проблем телефонии и баз данных"], "weaknesses": ["Требуется документальная фиксация всех регламентов доступов"], "verdict": "Технический скелет компании, связывающий удаленные офисы.", "files": ["05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T36_Ходичев_22-10_доступы_телефония_1С_ОРИГИНАЛ.md"]}, {"id": "berezniker", "name": "Никита Березникер", "title": "Руководитель антикризисной реструктуризации / и.о. РО2", "nominal_title": "Антикризисный управляющий / Архитектор цифровизации", "badge": "Управление", "badge_color": "#3b82f6", "photo_symbol": "⚡", "roi": "Ликвидация убытков, рост маржинальности", "metrics": {"Аудит БП Авдеева": "Сверка 78 пунктов управления и 55 задач БП", "Новая модель РО2": "3-звенная архитектура (L1 Лидоруб + L2 Ботя + L3 Лядский)", "Финансовый аудит": "Выявление убытка -53.87 € по мешкам 55×110 см", "Цифровой двойник": "Интерактивная онтология 27 узлов и каталог 305 файлов"}, "bp_summary": "БП 12–18.10.2026. Провел системный аудит причин сбоев отдела РО2, отделил административные функции от коммерческих, устранил хаос в планировании поставок, оцифровал знания компании в интерактивную платформу.", "strengths": ["Системное проектное мышление и математический анализ цифр 1С", "Вскрытие реальных узких мест без иллюзий", "Создание практических инструментов для руководства"], "weaknesses": ["Высокие требования к дисциплине и прозрачности подчиненных"], "verdict": "Перевел отдел продаж с ручного тормозящего администрирования на масштабируемую модель L1-L2-L3.", "files": ["08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/01_ТЗ_и_финмодель_реструктуризации_отдела_продаж_РО2.md", "08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/02_Комплексный_аудит_и_стратегический_план_РО2.md", "07_СТРАТЕГИЯ_И_ДЕКОМПОЗИЦИЯ_А4/01_Стратегия_Румыния_2027_REV3.pdf"]}, {"id": "moroz", "name": "Геннадий Мороз", "title": "Учредитель / Создатель системы управления ВБА", "nominal_title": "Владелец / Основатель компании", "badge": "Учредитель", "badge_color": "#ef4444", "photo_symbol": "👑", "roi": "Архитектор устойчивости бизнеса", "metrics": {"Методология": "7 инструментов административного управления", "Обучение": "23 видеоурока, технология обучения, шляпы постов", "Статистики": "Графики ГСД, квоты, еженедельное планирование"}, "bp_summary": "Создал устойчивую идеологическую и административную платформу компании ВБА. Внедрил технологию должностных папок, распределения ответственности по ценным конечным продуктам (ЦКП) и финансового планирования.", "strengths": ["Глубокое понимание системного управления и мотивации", "Создание уникальной базы знаний и обучающих материалов"], "weaknesses": ["Требуется постоянный контроль за тем, чтобы формальные ритуалы не подменяли реальные продажи"], "verdict": "Идеолог и методолог компании. Система работает безупречно, когда роли распределены в соответствии с реальными психотипами людей.", "files": ["01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Регламенты_студентов_и_проверочные_листы/01_Регламент_студента_ВБА.docx", "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/04_Управление_и_планирование_недели/2016-01-20_Регламент_по_планированию_на_неделю_ООО_Компания_ВБА.docx", "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/07_Методология_ЦКП_и_оргсхема/01_ЦКП_Технология_создания.docx"]}];
-    const rawNodes = [{"id": "node_moroz", "label": "Геннадий Мороз\n(Учредитель)", "group": "org", "level": 1, "title": "Учредитель, создатель системы управления ВБА", "role": "Владелец / Основатель", "ckp": "Разработанная и внедренная система 7 инструментов управления ВБА", "metrics": "Основатель методологии управления компании", "desc": "Автор идеологии ВБА, системы планирования недели и методологии должностных папок.", "files_prefix": ["02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/07_Методология_ЦКП_и_оргсхема/01_ЦКП_Технология_создания.docx", "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Регламенты_студентов_и_проверочные_листы/01_Регламент_студента_ВБА.docx"]}, {"id": "node_berezniker", "label": "Никита Березникер\n(Рук. реструктуризации)", "group": "org", "level": 2, "title": "Руководитель антикризисной реструктуризации и архитектор цифровизации", "role": "Руководитель проекта / и.о. РО2", "ckp": "Оцифрованная система управления, 3-звенный РО2 (L1-L3), ликвидация убытков", "metrics": "Сверка 78 пунктов управления, внедрение модели L1-L3, рост маржинальности", "desc": "Провёл сквозной аудит БП Авдеева, устранил искажения в отчетах, разработал цифровую платформу.", "files_prefix": ["08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/01_ТЗ_и_финмодель_реструктуризации_отдела_продаж_РО2.md", "08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/02_Комплексный_аудит_и_стратегический_план_РО2.md", "07_СТРАТЕГИЯ_И_ДЕКОМПОЗИЦИЯ_А4/01_Стратегия_Румыния_2027_REV3.pdf"]}, {"id": "node_avdeev", "label": "Алексей Авдеев\n(Администратор РО)", "group": "org", "level": 3, "title": "Бывший администратор отдела продаж (номинально РО2)", "role": "Администратор отдела продаж / Координатор рутины", "ckp": "Собранные отчеты менеджеров, заполненный Битрикс24", "metrics": "0 личных продаж, 67% времени на созвоны, 74% срывов по eMAG", "desc": "Выполнял функции секретаря-координатора. Не был коммерческим директором. Перегружал команду бюрократией.", "files_prefix": ["05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T04_02.10.2026_Координация_с_Авдеевым_часть_1.md", "05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T06_07.10.2026_Передача_должности_Авдеевым.md", "06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027/02_REV11_Чистая_прибыль_Авдеев_Каноническая.xlsx"]}, {"id": "node_rasin", "label": "Александр Расин\n(Финансы / ФП1)", "group": "org", "level": 2, "title": "Руководитель финансовой службы и казначейства", "role": "Финансовый директор / Ответственный за ФП1", "ckp": "Сбалансированное финансовое планирование по фондам, отсутствие кассовых разрывов", "metrics": "Контроль валютных счетов ING Bank, 100% погашение долга Agropec (210.5k RON)", "desc": "Ведет директивы ФП1, расчеты с поставщиками в Индии и Турции, валютные счета в ING Bank.", "files_prefix": ["06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027/03_FP1_Финансовое_планирование_Расин.xlsx", "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/01_ING_Bank_Выписка_28-10-2026_VBA_TG_BAG_SRL.pdf"]}, {"id": "node_botea", "label": "Дмитрий Ботя\n(Продажи Румыния / L2)", "group": "org", "level": 3, "title": "Inbound Closer и фермер склада Брэила", "role": "Менеджер по продажам (Румыния) / L2", "ckp": "Реализованные биг-бэги со склада в Брэила, полученная маржа", "metrics": "Октябрь: 10 225 шт., 100 806 € выручки, 14 300 € маржи. ROI = 16.85x", "desc": "Главный мотор продаж в Румынии. Конвертирует входящий трафик, дожимает крупные партии.", "files_prefix": ["10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/01_Продажи_Ботя_1С_28.09-28.10.2026_ФАКТ.xlsx", "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/04_Работа_Дмитрия_Боти_REV5.pdf"]}, {"id": "node_lyadskiy", "label": "Андрей Лядский\n(Опт / ВЭД / L3)", "group": "org", "level": 3, "title": "Key Account Hunter и специалист по крупным холдингам", "role": "Ведущий менеджер по опту / L3", "ckp": "Крупнооптовые контракты с агрохолдингами, 100% предоплата", "metrics": "Выполнение плана 2026 г. на 179.6% (84 955 шт. факт). ROI = 10.93x", "desc": "Ведет стратегических гигантов (Südzucker, ViOil, Carvidon). Длинный проектный B2B-цикл.", "files_prefix": ["08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/02_Комплексный_аудит_и_стратегический_план_РО2.md", "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/03_Опт_VIP_Румыния_REV3.pdf"]}, {"id": "node_ampilogov", "label": "Дмитрий Ампилогов\n(Логистика)", "group": "org", "level": 3, "title": "Координатор логистики и складских перемещений", "role": "Логист / Снабженец", "ckp": "Своевременно доставленные контейнеры и партии на склад в Брэила", "metrics": "Доставка из Украины (AV-32), контейнеры Индии (AV-18), склад Брэила", "desc": "Обеспечивает физическую доставку товара от производителей до склада.", "files_prefix": ["10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/04_Склад_Генеральный_реестр_партий_1С.xlsx"]}, {"id": "node_yonash", "label": "Оксана Йонаш\n(Учет 1С)", "group": "org", "level": 3, "title": "Специалист по 1С и товарно-партионному учету", "role": "Оператор 1С / Бухгалтер склада", "ckp": "Абсолютно сходящиеся остатки склада в 1С и фактические партии", "metrics": "Партионный учет в 1С 8.3, расчет себестоимости партий", "desc": "Ведет номенклатурные справочники, сверяет партии, устраняет расхождения.", "files_prefix": ["10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/04_Склад_Генеральный_реестр_партий_1С.xlsx"]}, {"id": "node_khodichev", "label": "Сергей Ходичев\n(IT / Инфраструктура)", "group": "org", "level": 3, "title": "Инженер IT-инфраструктуры и связности", "role": "Инженер инфраструктуры", "ckp": "Бесперебойно работающая телефония, базы 1С и доступы", "metrics": "SIP-телефония, серверы 1С, Битрикс24, безопасность", "desc": "Обеспечивает техническую работоспособность серверов, связи и баз данных.", "files_prefix": ["05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T36_Ходичев_22-10_доступы_телефония_1С_ОРИГИНАЛ.md"]}, {"id": "node_wh_braila", "label": "Склад г. Брэила\n(Румыния)", "group": "warehouse", "level": 4, "title": "Единственный центральный складской хаб в Румынии", "role": "Складской комплекс", "ckp": "Сохраненный товарный запас, экспресс-отгрузка день в день", "metrics": "10 225 шт. отгружено в октябре через Cargus и попутный транспорт", "desc": "Стратегический склад компании в ЕС. Все исторические упоминания Отопени/Оради аннулированы.", "files_prefix": ["09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/05_Склад_Брэила_Договоры_Логистика_REV3.pdf", "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/04_Склад_Генеральный_реестр_партий_1С.xlsx"]}, {"id": "node_sku_liner", "label": "SKU: Ж/д вкладыши\n(Liner Bags)", "group": "sku", "level": 4, "title": "Высокомаржинальный крупнооптовый продукт", "role": "Товарная группа", "ckp": "Сверхвысокая маржинальность, 100% предоплата", "metrics": "+8 288.96 € чистой маржи на 500 шт. (октябрь). 16.5 €/шт. чистыми", "desc": "Поставки агрохолдингам Agropec Dionis и Global Grain. Флагман маржинального дохода.", "files_prefix": ["09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/03_Опт_VIP_Румыния_REV3.pdf"]}, {"id": "node_sku_4loop", "label": "SKU: Биг-бэги 4-петл.\n(90x90x160)", "group": "sku", "level": 4, "title": "Основной массовый продукт розницы и среднего опта", "role": "Товарная группа", "ckp": "Стабильный валовый объем и оборачиваемость", "metrics": "Базовая маржа 1.40 €/шт., регулярный спрос фермеров", "desc": "Базовая рабочая лошадка продаж Боти в Румынии.", "files_prefix": ["10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/01_Продажи_Ботя_1С_28.09-28.10.2026_ФАКТ.xlsx"]}, {"id": "node_sku_pp_bags", "label": "SKU: Мешки 55x110\n(НЕЛИКВИД / УБЫТОК)", "group": "sku", "level": 4, "title": "Убыточная товарная позиция под ликвидацию", "role": "Неликвид", "ckp": "Полная ликвидация остатков со склада Брэила", "metrics": "Убыток -53.87 € (-10.35%) на партии 4 100 шт.", "desc": "Ошибочная закупка Авдеева. Скрывалась в отчетах. Выведена на плановую распродажу.", "files_prefix": ["08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/05_Отчет_сопоставления_двух_моделей_и_аудита_Авдеева.md"]}];
-    const rawEdges = [{"from": "node_moroz", "to": "node_berezniker", "label": "Утверждение стратегии"}, {"from": "node_moroz", "to": "node_rasin", "label": "Директивы ФП1"}, {"from": "node_berezniker", "to": "node_avdeev", "label": "Аудит БП и снятие"}, {"from": "node_berezniker", "to": "node_botea", "label": "Модель L2 / Разгрузка"}, {"from": "node_berezniker", "to": "node_lyadskiy", "label": "Модель L3 / Опт"}, {"from": "node_rasin", "to": "node_yonash", "label": "Сверка себестоимости"}, {"from": "node_botea", "to": "node_wh_braila", "label": "Отгрузка 10 225 шт."}, {"from": "node_botea", "to": "node_sku_liner", "label": "Продажа 500 шт."}, {"from": "node_botea", "to": "node_sku_4loop", "label": "Массовые продажи"}, {"from": "node_lyadskiy", "to": "node_sku_liner", "label": "Крупные тендеры"}, {"from": "node_ampilogov", "to": "node_wh_braila", "label": "Снабжение хаба"}, {"from": "node_yonash", "to": "node_wh_braila", "label": "Партионный учет"}, {"from": "node_khodichev", "to": "node_botea", "label": "Телефония и 1С"}, {"from": "node_berezniker", "to": "node_sku_pp_bags", "label": "Ликвидация неликвида"}];
+    const reportsData = [{"id": "rep_01", "num": "01", "title": "Продукт, склад и рынок Румынии (REV3)", "file_pdf": "01_Продукт_склад_рынок_REV3.pdf", "file_xlsx": "01_Продукт_склад_рынок_REV3_Расчёты.xlsx", "category": "Склад и цепочка поставок", "desc": "Юнит-экономика импорта биг-бэгов из Индии (калькуляция Landed Cost), оборачиваемость ходовых позиций SKU Run-Rate (T20, T52, T16) на центральном складе в г. Брэила, ликвидация неликвидных позиций.", "kpis": [{"label": "Центральный склад", "value": "г. Брэила (Румыния)"}, {"label": "Ключевые SKU склада", "value": "T20 (120см), T52 (95см), T16 (100см)"}, {"label": "Канал снабжения Индия", "value": "Контейнеры 40ft HQ (4.8k–5.2k шт.)"}, {"label": "Логистическое плечо", "value": "Порт Констанца ➔ Хаб Брэила"}], "highlights": ["Landed Cost биг-бэга из Индии рассчитывается с учетом фрахта до Констанцы, портовой перевалки, пошлины ЕС и автодоставки в Брэила.", "Партионный анализ подтверждает высокую рентабельность мелких партий (5–50 шт.) при экспресс-отгрузке через курьерскую службу Cargus.", "Товарная позиция ПП мешки 55×110 см показала отрицательную рентабельность (-53.87 €) и официально выведена на распродажу."]}, {"id": "rep_02", "num": "02", "title": "Розница, реклама и входящий поток (REV3)", "file_pdf": "02_Розница_входящий_поток_реклама_REV3.pdf", "file_xlsx": "02_Розница_входящий_поток_реклама_REV3_Расчёты.xlsx", "category": "Маркетинг и розничный сбыт", "desc": "Анализ входящих обращений с Google Ads и маркетплейса OLX за июль–октябрь 2026 г., воронка лидов в оплаченные сделки 5–50 шт., динамика рекламного бюджета (750.15 € в октябре) и стоимость лида.", "kpis": [{"label": "Всего обращений (4 мес)", "value": "519 обращений"}, {"label": "Google Ads (сентябрь пик)", "value": "104 целевых лида"}, {"label": "OLX обращения (в среднем)", "value": "50–65 обращений/мес"}, {"label": "Рекламный бюджет октябрь", "value": "750.15 € (Google + OLX)"}], "highlights": ["Канал Google Ads обеспечивает стабильный приток средних и крупных заявок, в то время как OLX генерирует быстрый розничный поток от мелких фермеров.", "Конверсия обращений в отгрузки партий 5–50 шт. составляет 55–65% при оперативной обработке день-в-день.", "Медиаплан на ноябрь предусматривает масштабирование бюджета Google Ads до 900 € для поддержания складского темпа 1 000 шт./неделю."]}, {"id": "rep_03", "num": "03", "title": "Опт, VIP-клиенты и дебиторская задолженность (REV3)", "file_pdf": "03_Опт_VIP_Румыния_REV3.pdf", "file_xlsx": "03_Опт_VIP_Румыния_REV3_Расчёты.xlsx", "category": "Крупный опт и казначейство", "desc": "Анализ пула крупнейших клиентов Румынии за 9 месяцев (Prutul SA 4 080 шт., Aviputna 938 шт.), октябрьские спецконтракты (Agropec Dionis 300 вкладышей, Construct Oas 2 000 бэгов) и аудит дебиторки с погашением в ING Bank.", "kpis": [{"label": "Крупнейший контракт месяца", "value": "Agropec Dionis (39 328.87 €)"}, {"label": "Валовая прибыль контракта", "value": "12 439.72 € (31.6%)"}, {"label": "Контракт Construct Oas", "value": "15 821.96 € (2 000 бэгов)"}, {"label": "Погашено в ING Bank", "value": "210 540 RON (100% Agropec)"}], "highlights": ["Поставка 300 ж/д вкладышей компании Agropec Dionis дала рекордную чистую маржу 12 439.72 € при нулевой просрочке.", "Срез дебиторской задолженности 271 648 RON урегулирован: 210 540 RON погашены на 100%, остаток составляет 61 108.62 RON (~12.3k €).", "Установлен регламент кредитного контроля: обязательная 100% предоплата для новых контрагентов и жесткий стоп-отгрузка при просрочке свыше 7 дней."]}, {"id": "rep_04", "num": "04", "title": "Коммерческий факт продаж 1С: Дмитрий Ботя (REV5)", "file_pdf": "04_Работа_Дмитрия_Боти_REV5.pdf", "file_xlsx": "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/01_Продажи_Ботя_1С_28.09-28.10.2026_ФАКТ.xlsx", "category": "Фактический учет 1С", "desc": "Детальный реестр отгрузок за октябрь 2026 года по 123 накладным: реализация 10 225 изделий, выручка 100 806.38 €, валовая прибыль 14 300.62 €, структура заказов по размеру партий со склада в Брэила.", "kpis": [{"label": "Объем реализации", "value": "10 225 биг-бэгов"}, {"label": "Выручка по 1С", "value": "100 806.38 €"}, {"label": "Валовая прибыль", "value": "14 300.62 €"}, {"label": "Количество накладных", "value": "123 инвойса"}], "highlights": ["В сегменте 5–50 шт. отгружено 1 285 шт. по 73 накладным с высокой маржинальностью 31.6% (2 235.92 € маржи).", "В среднем опте (51–299 шт.) реализовано 730 шт. по 6 накладным (1 060.82 € маржи).", "Остальной объем обеспечили крупные заказные партии (Construct Oas 2 000 шт., Agropec 300 вкладышей, стандарт 300+ 500 шт.)."]}, {"id": "rep_05", "num": "05", "title": "Сводный генеральный отчет ГД (REV4)", "file_pdf": "05_Сводный_ГД_REV4.pdf", "file_xlsx": "05_Сводный_ГД_REV4_Расчёты.xlsx", "category": "Консолидированный отчет ГД", "desc": "Комплексная сводка деятельности румынского подразделения: базовый период за 9 месяцев (26 208 шт., выручка 165 453.48 €) + контрольный октябрь (10 225 шт.), сходимость складского и банковского контуров, паспорт рисков.", "kpis": [{"label": "Базовый факт (9 мес)", "value": "26 208 шт. (165 453.48 €)"}, {"label": "Валовая прибыль 9 мес", "value": "16 208 € (до резервов)"}, {"label": "Сопоставимый Q3 26/25", "value": "16 208 шт. vs 19 139 шт. (84.7%)"}, {"label": "Статус утверждения", "value": "Официально утвержден ГД"}], "highlights": ["Сводка устраняет задвоения данных и фиксирует фактические границы между историческими отчетами и текущим учетом 1С.", "Подтверждена полная сходимость проводок 1С и выписок банка ING Bank Romania.", "Сформирована единая модель управления товарными запасами склада в Брэила."]}, {"id": "rep_06", "num": "06", "title": "Стратегия и финансовая модель Румыния 2027 (REV3)", "file_pdf": "06_Стратегия_Румыния_2027_REV3.pdf", "file_xlsx": "06_Стратегия_Румыния_2027_REV3_Расчёты.xlsx", "category": "Стратегический P&L", "desc": "3 прогнозных сценария развития склада Брэила на 2027 год, помесячная сезонность (12 месяцев), смета постоянных расходов OpEx (45 930 €), расчет точки безубыточности и оборотного капитала контейнерных поставок.", "kpis": [{"label": "Базовый объем 2027", "value": "40 000 шт. / 252 523 €"}, {"label": "Валовая прибыль 2027", "value": "85 370.44 € (33.8%)"}, {"label": "Бюджет OpEx 2027", "value": "45 930.30 €"}, {"label": "Операционный остаток", "value": "39 440.13 €"}], "highlights": ["Консервативный сценарий: 32 000 шт., выручка 202 018 €, валовая прибыль 68 296 €, остаток 23 086 €.", "Базовый сценарий: 40 000 шт., выручка 252 523 €, валовая прибыль 85 370 €, остаток 39 440 €.", "Оптимистичный сценарий: 48 000 шт., выручка 303 028 €, валовая прибыль 102 444 €, остаток 55 794 €.", "Сезонность отражает пиковые месяцы агросезона в Румынии: сентябрь (6 500 шт.), июль-август (по 5 200 шт.)."]}, {"id": "rep_07", "num": "07", "title": "Программа реализации стратегии Румыния (REV3)", "file_pdf": "07_Программа_реализации_Румыния_REV3.pdf", "file_xlsx": "07_СТРАТЕГИЯ_И_ДЕКОМПОЗИЦИЯ_А4/01_Стратегия_Румыния_2027_REV3.pdf", "category": "План реализации", "desc": "Календарная дорожная карта перевода румынского подразделения на трехзвенную структуру сбыта (L1-L2-L3), регламенты складской логистики Брэила, процедуры финансового контроля и контрольные точки внедрения.", "kpis": [{"label": "Этапы дорожной карты", "value": "4 ключевых блока"}, {"label": "Трехзвенная модель", "value": "L1 Диспетчер + L2 Фермер + L3 Хантер"}, {"label": "Разгрузка продавца L2", "value": "Оператор первички L1 (500 € оклад)"}, {"label": "Контроль исполнения", "value": "Еженедельный такт (ГСД)"}], "highlights": ["Блок 1: Автоматизация первичного документооборота (выписка счетов, накладные Cargus, разгрузка Боти на 4 часа в день).", "Блок 2: Формирование неснижаемого складского запаса (Run-Rate) в Брэила под пиковый агросезон.", "Блок 3: Развертывание выделенного B2B-контура (L3) под крупные агрохолдинги и контракты на ж/д вкладыши.", "Блок 4: Синхронизация казначейства через директивы ФП1 и еженедельный мониторинг платежей."]}, {"id": "rep_08", "num": "08", "title": "Конкурентная разведка рынка Румынии (ТОП-10)", "file_pdf": "08_Конкурентная_разведка_ТОП10_Румыния_REV1.pdf", "file_xlsx": "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/08_Конкурентная_разведка_ТОП10_Румыния_REV1.pdf", "category": "Анализ конкурентной среды", "desc": "Исследование 10 основных игроков рынка промышленной полипропиленовой упаковки в Румынии: сравнение ценовых уровней, складских запасов, условий отсрочки и логистических сроков доставки.", "kpis": [{"label": "Компаний в выборке", "value": "ТОП-10 поставщиков Румынии"}, {"label": "Диапазон цен на рынке", "value": "4.20 € – 6.80 € за биг-бэг"}, {"label": "Главное преимущество VBA", "value": "Отгрузка со склада в Брэила за 24 ч"}, {"label": "Транспортная модель", "value": "Cargus + попутные зерновозы"}], "highlights": ["Большинство местных трейдеров работают под заказ с циклом поставки 3–4 недели или держат узкий ассортимент б/у тары.", "Наличие постоянного физического запаса новых биг-бэгов на складе в Брэила позволяет компании VBA забирать срочные заявки с премиальной маржой.", "По ж/д вкладышам (Liner Bags) компания занимает уникальное положение за счет прямых поставок специализированных спецификаций."]}];
+    const jobFoldersData = [{"id": "post_owner", "title": "Учредитель / Создатель системы управления", "symbol": "👑", "holder": "Геннадий Мороз", "ckp": "Разработанная, внедренная и функционирующая технология административного управления компанией.", "stat": "Общий чистый маржинальный доход предприятия и темп масштабирования бизнеса.", "duties": ["Определение стратегических целей и рыночных направлений развития компании.", "Утверждение оргполитик, базовых регламентов и организующей схемы предприятия.", "Контроль соблюдения технологии финансового планирования и целевого использования фондов."], "files": ["02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/07_Методология_ЦКП_и_оргсхема/01_ЦКП_Технология_создания.docx", "01_ВБА_ОБУЧЕНИЕ_И_ТЕХНОЛОГИЯ_ОБУЧЕНИЯ/01_Регламенты_студентов_и_проверочные_листы/01_Регламент_студента_ВБА.docx", "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/04_Управление_и_планирование_недели/2016-01-20_Регламент_по_планированию_на_неделю_ООО_Компания_ВБА.docx"]}, {"id": "post_finance", "title": "Руководитель финансовой службы / Казначей (ФП1)", "symbol": "💳", "holder": "Александр Расин", "ckp": "Сбалансированное финансовое планирование по фондам и отсутствие кассовых разрывов при 100% контроле ликвидности.", "stat": "Остаток денежных средств на расчетных счетах после выполнения обязательств и величина резервных фондов.", "duties": ["Формирование еженедельных директив финансового планирования (ФП1).", "Управление расчетными счетами в ING Bank Romania (VBA TG BAG SRL) и валютными платежами поставщикам.", "Контроль кредиторской задолженности и соблюдение регламентов кредитного контроля по дебиторам."], "files": ["06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027/03_FP1_Финансовое_планирование_Расин.xlsx", "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/01_ING_Bank_Выписка_28-10-2026_VBA_TG_BAG_SRL.pdf", "02_ДОЛЖНОСТНЫЕ_ПАПКИ_И_ЦКП/05_Себестоимость_и_финансы/2015-06-11_Регламент_по_финансовому_планированию.docx"]}, {"id": "post_commercial", "title": "Руководитель коммерческого отделения (РО2)", "symbol": "⚡", "holder": "Никита Березникер (и.о. РО2 / Рук. реструктуризации)", "ckp": "Выполненный план по выручке и маржинальному доходу от реализации биг-бэгов со склада в Брэила и прямых поставок.", "stat": "Суммарный маржинальный доход от коммерческих отгрузок по филиалу за отчетную неделю/месяц.", "duties": ["Обеспечение выполнения плановых квот по выручке и марже.", "Координация трехзвенной структуры отдела продаж (L1 Диспетчер + L2 Фермер + L3 Хантер).", "Управление ценовой матрицей, утверждение условий поставок и ликвидация неликвидных запасов."], "files": ["08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/01_ТЗ_и_финмодель_реструктуризации_отдела_продаж_РО2.md", "08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/02_Комплексный_аудит_и_стратегический_план_РО2.md", "07_СТРАТЕГИЯ_И_ДЕКОМПОЗИЦИЯ_А4/01_Стратегия_Румыния_2027_REV3.pdf"]}, {"id": "post_sales_ro", "title": "Менеджер по продажам (Румыния / Inbound Closer L2)", "symbol": "🎯", "holder": "Дмитрий Ботя", "ckp": "Реализованные биг-бэги со склада в Брэила с максимальной маржинальностью и полученная оплата от клиентов.", "stat": "Маржинальный доход от розничных и среднеоптовых отгрузок в Румынии.", "duties": ["Оперативная квалификация и закрытие входящих целевых обращений (Google Ads, OLX, повторные заказы).", "Выставление коммерческих предложений, счетов и контроль поступления оплаты на счет в ING Bank.", "Передача подтвержденных заявок на склад в Брэила для отгрузки через Cargus или попутный транспорт."], "files": ["09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/04_Работа_Дмитрия_Боти_REV5.pdf", "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/01_Продажи_Ботя_1С_28.09-28.10.2026_ФАКТ.xlsx", "03_ОБУЧЕНИЕ_ПРОДАЖАМ_БОЛГАРИЯ_И_РУМЫНИЯ/02_Румыния_Стратегия_и_продажи/03_Работа_менеджера_Ботя.docx"]}, {"id": "post_key_accounts", "title": "Менеджер ключевых клиентов (Key Accounts B2B / Hunter L3)", "symbol": "💼", "holder": "Андрей Лядский", "ckp": "Заключенные долгосрочные контракты с крупными переработчиками и оплаченные крупные оптовые партии продукции.", "stat": "Объем отгрузок в штуках и маржинальный доход по крупным холдингам и тендерам.", "duties": ["Ведение стратегических промышленных потребителей (сахзаводы, МЭЗы, агрохолдинги).", "Согласование индивидуальных спецификаций, графиков отгрузок и условий 100% предоплаты.", "Обеспечение базовой производственной загрузки украинского швейного подразделения."], "files": ["08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/02_Комплексный_аудит_и_стратегический_план_РО2.md", "09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/03_Опт_VIP_Румыния_REV3.pdf"]}, {"id": "post_warehouse_acc", "title": "Специалист по 1С и товарно-партионному учету", "symbol": "📊", "holder": "Оксана Йонаш", "ckp": "100% сходимость физических остатков склада Брэила с проводками в 1С и точный расчет себестоимости партий.", "stat": "Отсутствие расхождений при сверках складов и своевременность закрытия складских документов.", "duties": ["Оприходование поступивших партий тары из Индии и Украины в информационную базу 1С.", "Партионное списание себестоимости и учет дополнительных логистических затрат.", "Проведение регулярных сверок и инвентаризаций остатков склада в Брэила."], "files": ["10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/04_Склад_Генеральный_реестр_партий_1С.xlsx", "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/01_Продажи_Ботя_1С_28.09-28.10.2026_ФАКТ.xlsx"]}, {"id": "post_logistics", "title": "Координатор логистики и складских поставок", "symbol": "🚚", "holder": "Дмитрий Ампилогов", "ckp": "Своевременно доставленные партии тары на склад Брэила по минимальной себестоимости доставки.", "stat": "Соблюдение плановых сроков поставок и удельная стоимость логистики на единицу продукции.", "duties": ["Координация морских контейнерных перевозок из Индии через порт Констанца.", "Организация автомобильной доставки партий с производства в Украине.", "Взаимодействие со складом в Брэила и транспортной компанией Cargus по отгрузкам клиентам."], "files": ["09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/05_Склад_Брэила_Договоры_Логистика_REV3.pdf", "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/04_Склад_Генеральный_реестр_партий_1С.xlsx"]}, {"id": "post_it", "title": "Инженер IT-инфраструктуры и интеграций", "symbol": "💻", "holder": "Сергей Ходичев", "ckp": "Бесперебойно работающая корпоративная телефония, базы данных 1С и каналы связи.", "stat": "Коэффициент доступности (Uptime) критических IT-сервисов компании.", "duties": ["Администрирование серверов 1С:Предприятие и обменов данными между базами.", "Настройка и поддержка корпоративной IP-телефонии и маршрутизации входящих звонков.", "Управление правами доступа к корпоративным ресурсам и информационная безопасность."], "files": ["05_СТЕНОГРАММЫ_И_ПРОТОКОЛЫ_КООРДИНАЦИЙ/T36_Ходичев_22-10_доступы_телефония_1С_ОРИГИНАЛ.md"]}];
+    const rawNodes = [{"id": "node_supply_india", "label": "Производство Индия\n(Контейнеры 40ft HQ)", "group": "supply", "level": 1, "title": "Канал импорта", "role": "Поставщик сырья и тары", "ckp": "Качественная тара по заводской себестоимости, морской фрахт 35-45 дней", "metrics": "Партии 4 800 - 5 200 шт., порт Констанца", "desc": "Базовый источник серийных биг-бэгов (T20, T52, T16) для склада в Брэила.", "files_prefix": ["09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/01_Продукт_склад_рынок_REV3.pdf"]}, {"id": "node_supply_ua", "label": "Производство Украина\n(Швейный цех)", "group": "supply", "level": 1, "title": "Собственное производство", "role": "Быстрый цикл пошива", "ckp": "Спецзаказы и вкладыши с коротким логистическим плечом 3-5 дней", "metrics": "Партии под Südzucker, Agropec, быстрое пополнение", "desc": "Оперативное закрытие специализированных заявок и ж/д вкладышей.", "files_prefix": ["09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/03_Опт_VIP_Румыния_REV3.pdf"]}, {"id": "node_hub_braila", "label": "Склад г. Брэила\n(Румыния)", "group": "warehouse", "level": 2, "title": "Центральный хаб ЕС", "role": "Складской комплекс", "ckp": "Сохраненный товарный запас, отгрузка день-в-день", "metrics": "10 225 шт. отгружено за октябрь через Cargus и попутный автотранспорт", "desc": "Стратегический распределительный хаб компании в Румынии.", "files_prefix": ["09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/05_Склад_Брэила_Договоры_Логистика_REV3.pdf", "10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/04_Склад_Генеральный_реестр_партий_1С.xlsx"]}, {"id": "node_inbound_mktg", "label": "Маркетинг: Google Ads & OLX\n(Входящий поток)", "group": "sales", "level": 2, "title": "Канал генерации лидов", "role": "Рекламный контур", "ckp": "Целевые обращения румынских фермеров и переработчиков", "metrics": "100-160 обращений в месяц, бюджет 750 €", "desc": "Генерирует заявки на розничные и оптовые партии.", "files_prefix": ["09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/02_Розница_входящий_поток_реклама_REV3.pdf"]}, {"id": "node_sales_l2", "label": "Продажи: Румыния (L2)\n(Дмитрий Ботя)", "group": "sales", "level": 3, "title": "Inbound Closer", "role": "Операционные продажи", "ckp": "Оплаченные партии биг-бэгов со склада Брэила", "metrics": "Факт октября: 10 225 шт., выручка 100 806 €, маржа 14 300 €", "desc": "Конвертирует входящий поток и ведет постоянных румынских заказчиков.", "files_prefix": ["09_ПАКЕТ_ОТЧЕТОВ_ГД_01-08_ИТОГОВЫЙ/04_Работа_Дмитрия_Боти_REV5.pdf"]}, {"id": "node_sales_l3", "label": "Крупный опт: B2B (L3)\n(Андрей Лядский)", "group": "sales", "level": 3, "title": "Key Accounts Hunter", "role": "Стратегический опт", "ckp": "Долгосрочные оптовые контракты с агрохолдингами", "metrics": "Выполнение плана 2026: 84 955 шт. (179.6%)", "desc": "Ведет контракты с Südzucker, ViOil, Carvidon и поставки вкладышей.", "files_prefix": ["08_РЕСТРУКТУРИЗАЦИЯ_ОТДЕЛА_ПРОДАЖ_L1-L3/02_Комплексный_аудит_и_стратегический_план_РО2.md"]}, {"id": "node_treasury_ing", "label": "Казначейство: ING Bank\n(ФП1 Расин)", "group": "finance", "level": 4, "title": "Финансовый контур", "role": "Казначейство и фонды", "ckp": "Полная ликвидность, отсутствие кассовых разрывов, фонды ФП1", "metrics": "210 540 RON долга Agropec закрыто на 100%, текущий остаток ДЗ 61.1k RON", "desc": "Расчетные счета VBA TG BAG SRL, контроль директив и валютных платежей.", "files_prefix": ["10_АКТУАЛЬНЫЕ_ВЫГРУЗКИ_1С_И_СКЛАД_БРЭИЛА/01_ING_Bank_Выписка_28-10-2026_VBA_TG_BAG_SRL.pdf", "06_ФИНАНСОВЫЕ_МОДЕЛИ_И_P&L_2026-2027/03_FP1_Финансовое_планирование_Расин.xlsx"]}];
+    const rawEdges = [{"from": "node_supply_india", "to": "node_hub_braila", "label": "Контейнеры Констанца (35-45 дн)"}, {"from": "node_supply_ua", "to": "node_hub_braila", "label": "Автодоставка пошив (3-5 дн)"}, {"from": "node_inbound_mktg", "to": "node_sales_l2", "label": "100-160 лидов/мес"}, {"from": "node_sales_l2", "to": "node_hub_braila", "label": "Отгрузка 10 225 шт. (Cargus/авто)"}, {"from": "node_sales_l3", "to": "node_supply_ua", "label": "Заказы Südzucker / Вкладыши"}, {"from": "node_sales_l2", "to": "node_treasury_ing", "label": "Поступления 100 806.38 €"}, {"from": "node_sales_l3", "to": "node_treasury_ing", "label": "Оплаты по контрактам"}, {"from": "node_treasury_ing", "to": "node_supply_india", "label": "Оплата инвойсов Индии"}, {"from": "node_treasury_ing", "to": "node_supply_ua", "label": "Финансирование цеха"}];
 
     let currentCategoryFilter = 'all';
 
@@ -849,96 +872,41 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
       event.currentTarget.classList.add('active');
       document.getElementById(tabId).classList.add('active');
 
-      if (tabId === 'tab-analytics') {
-        initCharts();
+      if (tabId === 'tab-dashboard') {
+        initDashboardCharts();
       }
       if (tabId === 'tab-graph') {
-        initGraph();
+        initEnterpriseGraph();
       }
     }
 
-    // TAB 1: CATALOG RENDERING
-    function renderCatalog(items) {
-      const tbody = document.getElementById('catalogTableBody');
-      tbody.innerHTML = '';
-      
-      items.forEach(item => {
-        const tr = document.createElement('tr');
-        const ext = item.ext.replace('.', '') || 'file';
-        
-        let tagsHtml = '';
-        if (item.tags && item.tags.length) {
-          tagsHtml = item.tags.map(t => `<span class="file-tag">#${t}</span>`).join('');
-        }
+    // TAB 1: DASHBOARD CHARTS
+    let dashboardChartsInitialized = false;
+    function initDashboardCharts() {
+      if (dashboardChartsInitialized) return;
+      dashboardChartsInitialized = true;
 
-        tr.innerHTML = `
-          <td>
-            <div style="display: flex; align-items: center;">
-              <span class="file-icon ${ext}">${ext.toUpperCase().slice(0, 4)}</span>
-              <div>
-                <div class="file-name-cell">${item.name}</div>
-                <div class="file-path-sub">${item.path}</div>
-              </div>
-            </div>
-          </td>
-          <td><span style="font-size: 12px; color: #cbd5e1;">${item.category}</span></td>
-          <td>${tagsHtml}</td>
-          <td style="text-align: right; font-weight: 600; color: var(--text-muted);">${item.size_str}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-
-      document.getElementById('catalogStats').textContent = `Показано ${items.length} из ${catalogData.length} файлов`;
-    }
-
-    function filterCatalog() {
-      const query = document.getElementById('catalogSearch').value.toLowerCase().trim();
-      const filtered = catalogData.filter(item => {
-        const matchesQuery = item.name.toLowerCase().includes(query) ||
-                             item.path.toLowerCase().includes(query) ||
-                             (item.tags && item.tags.some(t => t.toLowerCase().includes(query)));
-        
-        const matchesCat = currentCategoryFilter === 'all' || item.path.startsWith(currentCategoryFilter);
-        return matchesQuery && matchesCat;
-      });
-      renderCatalog(filtered);
-    }
-
-    function setCategoryFilter(catPrefix, element) {
-      currentCategoryFilter = catPrefix;
-      document.querySelectorAll('#categoryPills .pill').forEach(p => p.classList.remove('active'));
-      element.classList.add('active');
-      filterCatalog();
-    }
-
-    // TAB 2: CHARTS INITIALIZATION
-    let chartsInitialized = false;
-    function initCharts() {
-      if (chartsInitialized) return;
-      chartsInitialized = true;
-
-      // Chart 1: Sales Fact
-      new Chart(document.getElementById('salesFactChart'), {
+      // Chart 1: Seasonality
+      new Chart(document.getElementById('seasonalityChart'), {
         type: 'bar',
         data: {
-          labels: ['Нед 36', 'Нед 37', 'Нед 38', 'Нед 39', 'Нед 40', 'Нед 41 (Вкладыши)', 'Нед 42', 'Нед 43 (Факт 28.10)'],
+          labels: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
           datasets: [
             {
-              label: 'Выручка (€)',
-              data: [8400, 9200, 11500, 14200, 12600, 24800, 13100, 17006],
+              label: '2026 Факт FIBC (шт.)',
+              data: [300, 350, 674, 4860, 795, 3021, 4990, 3650, 7568, 10225, null, null],
               backgroundColor: 'rgba(56, 189, 248, 0.4)',
               borderColor: '#38bdf8',
-              borderWidth: 1,
-              yAxisID: 'y'
+              borderWidth: 1
             },
             {
-              label: 'Маржа (€)',
-              data: [1200, 1350, 1680, 2100, 1850, 12184, 1920, 2450],
+              label: '2027 Базовый план 40к (шт.)',
+              data: [1050, 1550, 2000, 2800, 3600, 3600, 5200, 5200, 6500, 3400, 2950, 1550],
               type: 'line',
               borderColor: '#34d399',
               backgroundColor: '#34d399',
-              tension: 0.3,
-              yAxisID: 'y'
+              tension: 0.35,
+              borderWidth: 2
             }
           ]
         },
@@ -947,30 +915,37 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
           maintainAspectRatio: false,
           plugins: { legend: { labels: { color: '#cbd5e1' } } },
           scales: {
-            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
-            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af' } },
+            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af' } }
           }
         }
       });
 
-      // Chart 2: Manager Comparison
-      new Chart(document.getElementById('managerCompChart'), {
+      // Chart 2: 3 Scenarios
+      new Chart(document.getElementById('scenariosChart'), {
         type: 'bar',
         data: {
-          labels: ['Маржа за месяц (€)', 'Штуки биг-бэгов (тыс. шт.)', 'Личный ROI (кратность)'],
+          labels: ['Консервативный (32к шт.)', 'Базовый (40к шт.)', 'Оптимистичный (48к шт.)'],
           datasets: [
             {
-              label: 'Дмитрий Ботя (L2 Румыния)',
-              data: [14300, 10.225, 16.85],
-              backgroundColor: 'rgba(16, 185, 129, 0.6)',
-              borderColor: '#10b981',
+              label: 'Выручка (€)',
+              data: [202018, 252523, 303028],
+              backgroundColor: 'rgba(56, 189, 248, 0.5)',
+              borderColor: '#38bdf8',
               borderWidth: 1
             },
             {
-              label: 'Андрей Лядский (L3 B2B / Опт)',
-              data: [9835, 8.416, 10.93],
-              backgroundColor: 'rgba(99, 102, 241, 0.6)',
-              borderColor: '#6366f1',
+              label: 'Валовая прибыль (€)',
+              data: [68296, 85370, 102444],
+              backgroundColor: 'rgba(52, 211, 153, 0.6)',
+              borderColor: '#34d399',
+              borderWidth: 1
+            },
+            {
+              label: 'Операционный остаток (€)',
+              data: [23086, 39440, 55794],
+              backgroundColor: 'rgba(192, 132, 252, 0.6)',
+              borderColor: '#c084fc',
               borderWidth: 1
             }
           ]
@@ -980,33 +955,35 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
           maintainAspectRatio: false,
           plugins: { legend: { labels: { color: '#cbd5e1' } } },
           scales: {
-            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
-            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af' } },
+            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af' } }
           }
         }
       });
 
-      // Chart 3: Avdeev Time Breakdown
-      new Chart(document.getElementById('avdeevTimeChart'), {
+      // Chart 3: Segments
+      new Chart(document.getElementById('segmentsChart'), {
         type: 'doughnut',
         data: {
           labels: [
-            'Административные созвоны (AV-11, AV-56)',
-            'Заполнение отчетов и Битрикс (AV-53, AV-59)',
-            'Сорванные задачи (eMAG 74%, склад 57%)',
-            'Передача дел и созвоны с новым РО2',
-            'Личные продажи и стратегия'
+            'Розница 5–50 шт. (1 285 шт.)',
+            'Средний опт 51–299 шт. (730 шт.)',
+            'Стандарт 300+ шт. (500 шт.)',
+            'Construct Oas (2 000 шт.)',
+            'Agropec Dionis вкладыши (300 шт.)',
+            'ПП мешки и Q-бэги (5 410 шт.)'
           ],
           datasets: [{
-            data: [26.25, 40.95, 18.5, 14.3, 0.0],
+            data: [1285, 730, 500, 2000, 300, 5410],
             backgroundColor: [
-              '#f59e0b',
-              '#d97706',
-              '#ef4444',
-              '#3b82f6',
-              '#10b981'
+              '#38bdf8',
+              '#34d399',
+              '#fbbf24',
+              '#6366f1',
+              '#10b981',
+              '#94a3b8'
             ],
-            borderColor: '#090d16',
+            borderColor: '#0b0f19',
             borderWidth: 2
           }]
         },
@@ -1014,25 +991,27 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { position: 'bottom', labels: { color: '#cbd5e1', font: { size: 11 } } }
+            legend: { position: 'right', labels: { color: '#cbd5e1', font: { size: 11 } } }
           }
         }
       });
 
-      // Chart 4: SKU Margin
-      new Chart(document.getElementById('skuMarginChart'), {
+      // Chart 4: Receivables & Bank
+      new Chart(document.getElementById('receivablesChart'), {
         type: 'bar',
         data: {
-          labels: ['Вкладыши ж/д (Liner)', 'Биг-бэг 4-петл. (90x90x160)', 'Мешки 55x110 (Неликвид)'],
+          labels: ['Agropec Dionis (ПОГАШЕНО)', 'Salrom', 'Ecofiber', 'Bog Art', 'Текущие (0–7 дней)'],
           datasets: [{
-            label: 'Чистая маржа на единицу (€)',
-            data: [16.58, 1.40, -0.013],
+            label: 'Сумма в RON',
+            data: [210540, 17112, 9239, 5000, 24206],
             backgroundColor: [
               'rgba(52, 211, 153, 0.7)',
-              'rgba(56, 189, 248, 0.7)',
-              'rgba(248, 113, 113, 0.7)'
+              'rgba(251, 191, 36, 0.6)',
+              'rgba(251, 191, 36, 0.6)',
+              'rgba(251, 191, 36, 0.6)',
+              'rgba(56, 189, 248, 0.6)'
             ],
-            borderColor: ['#34d399', '#38bdf8', '#f87171'],
+            borderColor: ['#34d399', '#fbbf24', '#fbbf24', '#fbbf24', '#38bdf8'],
             borderWidth: 1
           }]
         },
@@ -1041,124 +1020,94 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
           maintainAspectRatio: false,
           plugins: { legend: { display: false } },
           scales: {
-            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
-            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af' } },
+            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af' } }
           }
         }
       });
     }
 
-    // TAB 3: EMPLOYEES & DOSSIERS
-    function renderEmployeesList() {
-      const listContainer = document.getElementById('empListContainer');
+    // TAB 2: REPORTS RENDERING
+    function renderReportsList() {
+      const listContainer = document.getElementById('reportsListContainer');
       listContainer.innerHTML = '';
-      
-      employeesData.forEach((emp, idx) => {
+
+      reportsData.forEach((rep, idx) => {
         const item = document.createElement('div');
-        item.className = 'emp-item' + (idx === 0 ? ' active' : '');
-        item.onclick = () => selectEmployee(emp.id, item);
-        
+        item.className = 'report-item' + (idx === 0 ? ' active' : '');
+        item.onclick = () => selectReport(rep.id, item);
+
         item.innerHTML = `
-          <div class="emp-avatar">${emp.photo_symbol}</div>
-          <div class="emp-info">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span class="emp-name">${emp.name}</span>
-              <span class="emp-badge" style="background: ${emp.badge_color}22; color: ${emp.badge_color};">${emp.badge}</span>
-            </div>
-            <div class="emp-role-tag">${emp.title}</div>
+          <div class="rep-num-badge">${rep.num}</div>
+          <div>
+            <div class="rep-item-title">${rep.title}</div>
+            <div class="rep-item-cat">${rep.category}</div>
           </div>
         `;
         listContainer.appendChild(item);
       });
 
-      // Select first by default
-      if (employeesData.length > 0) {
-        renderDossier(employeesData[0]);
+      if (reportsData.length > 0) {
+        renderReportDetail(reportsData[0]);
       }
     }
 
-    function selectEmployee(empId, element) {
-      document.querySelectorAll('.emp-item').forEach(i => i.classList.remove('active'));
+    function selectReport(repId, element) {
+      document.querySelectorAll('.report-item').forEach(i => i.classList.remove('active'));
       element.classList.add('active');
-      const emp = employeesData.find(e => e.id === empId);
-      if (emp) renderDossier(emp);
+      const rep = reportsData.find(r => r.id === repId);
+      if (rep) renderReportDetail(rep);
     }
 
-    function renderDossier(emp) {
-      const panel = document.getElementById('dossierPanel');
+    function renderReportDetail(rep) {
+      const panel = document.getElementById('reportDetailPanel');
 
-      let metricsHtml = '';
-      for (const [k, v] of Object.entries(emp.metrics)) {
-        metricsHtml += `
-          <div class="metric-card">
-            <div class="metric-card-val">${v}</div>
-            <div class="metric-card-lbl">${k}</div>
-          </div>
-        `;
-      }
-
-      let strengthsHtml = emp.strengths.map(s => `<li>${s}</li>`).join('');
-      let weaknessesHtml = emp.weaknesses.map(w => `<li>${w}</li>`).join('');
-
-      let filesHtml = emp.files.map(f => `
-        <div style="font-size: 12px; background: rgba(0,0,0,0.25); padding: 6px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); color: var(--accent);">
-          📄 ${f}
+      let kpisHtml = rep.kpis.map(k => `
+        <div class="rep-kpi-card">
+          <div class="rep-kpi-val">${k.value}</div>
+          <div class="rep-kpi-lbl">${k.label}</div>
         </div>
       `).join('');
 
+      let highlightsHtml = rep.highlights.map(h => `<li>${h}</li>`).join('');
+
       panel.innerHTML = `
-        <div class="dossier-header">
-          <div class="dossier-titles">
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <h2>${emp.name}</h2>
-              <span class="emp-badge" style="background: ${emp.badge_color}22; color: ${emp.badge_color}; font-size: 11px; padding: 3px 8px;">${emp.badge}</span>
-            </div>
-            <div class="real-role">🎯 Реальная роль: ${emp.title}</div>
-            <div class="nominal-role">🏷️ Номинальное обозначение: ${emp.nominal_title}</div>
-          </div>
-          <div class="dossier-roi-box">
-            <div class="dossier-roi-val">${emp.roi}</div>
-            <div class="dossier-roi-lbl">Экономический возврат (ROI)</div>
+        <div class="rep-detail-header">
+          <div class="rep-detail-title">
+            <h2>Отчет №${rep.num}: ${rep.title}</h2>
+            <div class="rep-detail-cat">Раздел: ${rep.category}</div>
           </div>
         </div>
 
-        <div class="dossier-section">
-          <div class="dossier-sec-title">📊 Подтвержденные метрики и факты 1С</div>
-          <div class="metrics-grid">${metricsHtml}</div>
+        <div>
+          <div class="sec-block-title">📊 Ключевые показатели отчета</div>
+          <div class="rep-kpis-grid">${kpisHtml}</div>
         </div>
 
-        <div class="dossier-section">
-          <div class="dossier-sec-title">📋 Анализ Боевого Плана (БП) и задач</div>
-          <p style="font-size: 13px; line-height: 1.6; color: #cbd5e1; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px;">${emp.bp_summary}</p>
+        <div>
+          <div class="sec-block-title">📋 Описание и методология</div>
+          <p style="font-size: 13px; line-height: 1.6; color: #cbd5e1; background: rgba(0,0,0,0.25); padding: 14px; border-radius: 8px;">${rep.desc}</p>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-          <div class="dossier-section">
-            <div class="dossier-sec-title" style="color: var(--success);">✅ Сильные стороны / Реальная ценность</div>
-            <ul class="bullet-list">${strengthsHtml}</ul>
+        <div>
+          <div class="sec-block-title">🎯 Выводы и управленческие решения</div>
+          <ul class="rep-bullet-list">${highlightsHtml}</ul>
+        </div>
+
+        <div>
+          <div class="sec-block-title">📁 Связанные файлы отчета в мастер-базе</div>
+          <div class="rep-files-wrap">
+            <span class="rep-file-pill">📄 PDF: ${rep.file_pdf}</span>
+            <span class="rep-file-pill" style="border-color: rgba(52, 211, 153, 0.4); color: var(--success); background: rgba(52, 211, 153, 0.08);">📊 Расчетная модель: ${rep.file_xlsx}</span>
           </div>
-          <div class="dossier-section">
-            <div class="dossier-sec-title" style="color: var(--danger);">⚠️ Узкие места / Системные ограничения</div>
-            <ul class="bullet-list weak">${weaknessesHtml}</ul>
-          </div>
-        </div>
-
-        <div class="dossier-section">
-          <div class="dossier-sec-title">⚖️ Объективный управленческий вердикт</div>
-          <div class="verdict-callout ${emp.id === 'avdeev' ? 'warning' : ''}">${emp.verdict}</div>
-        </div>
-
-        <div class="dossier-section">
-          <div class="dossier-sec-title">📁 Связанные канонические документы</div>
-          <div style="display: flex; flex-direction: column; gap: 6px;">${filesHtml}</div>
         </div>
       `;
     }
 
-    // TAB 4: VIS.JS GRAPH
+    // TAB 3: ENTERPRISE GRAPH
     let graphInitialized = false;
     let network = null;
-    function initGraph() {
+    function initEnterpriseGraph() {
       if (graphInitialized) return;
       graphInitialized = true;
 
@@ -1169,7 +1118,7 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
         shape: 'dot',
         size: n.level === 1 ? 26 : n.level === 2 ? 22 : 18,
         color: {
-          background: n.group === 'org' ? '#38bdf8' : n.group === 'warehouse' ? '#34d399' : '#fbbf24',
+          background: n.group === 'supply' ? '#fbbf24' : n.group === 'warehouse' ? '#34d399' : n.group === 'sales' ? '#38bdf8' : '#c084fc',
           border: '#fff'
         },
         font: { color: '#f8fafc', size: 12 }
@@ -1181,13 +1130,13 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
         label: e.label,
         arrows: 'to',
         color: { color: 'rgba(255,255,255,0.25)', highlight: '#38bdf8' },
-        font: { color: '#94a3b8', size: 10, align: 'middle' }
+        font: { color: '#9ca3af', size: 10, align: 'middle' }
       })));
 
       network = new vis.Network(container, { nodes: nodesDataSet, edges: edgesDataSet }, {
         physics: {
           stabilization: false,
-          barnesHut: { gravitationalConstant: -3500, springLength: 140 }
+          barnesHut: { gravitationalConstant: -3800, springLength: 150 }
         }
       });
 
@@ -1224,10 +1173,145 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
       document.getElementById('graphDrawer').classList.remove('open');
     }
 
-    // INITIALIZATION ON LOAD
+    // TAB 4: JOB FOLDERS RENDERING
+    function renderJobsList() {
+      const listContainer = document.getElementById('jobsListContainer');
+      listContainer.innerHTML = '';
+
+      jobFoldersData.forEach((job, idx) => {
+        const item = document.createElement('div');
+        item.className = 'job-item' + (idx === 0 ? ' active' : '');
+        item.onclick = () => selectJob(job.id, item);
+
+        item.innerHTML = `
+          <div class="job-sym">${job.symbol}</div>
+          <div>
+            <div class="job-item-title">${job.title}</div>
+            <div class="job-item-holder">${job.holder}</div>
+          </div>
+        `;
+        listContainer.appendChild(item);
+      });
+
+      if (jobFoldersData.length > 0) {
+        renderJobDetail(jobFoldersData[0]);
+      }
+    }
+
+    function selectJob(jobId, element) {
+      document.querySelectorAll('.job-item').forEach(i => i.classList.remove('active'));
+      element.classList.add('active');
+      const job = jobFoldersData.find(j => j.id === jobId);
+      if (job) renderJobDetail(job);
+    }
+
+    function renderJobDetail(job) {
+      const panel = document.getElementById('jobDetailPanel');
+
+      let dutiesHtml = job.duties.map(d => `<li>${d}</li>`).join('');
+      let filesHtml = job.files.map(f => `
+        <div style="font-size: 12px; background: rgba(0,0,0,0.25); padding: 7px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); color: var(--accent);">
+          📄 ${f}
+        </div>
+      `).join('');
+
+      panel.innerHTML = `
+        <div class="rep-detail-header">
+          <div class="rep-detail-title">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 24px;">${job.symbol}</span>
+              <h2>${job.title}</h2>
+            </div>
+            <div class="rep-detail-cat" style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">Ответственный исполнитель: <strong style="color: #fff;">${job.holder}</strong></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="sec-block-title">🎯 Ценный конечный продукт поста (ЦКП)</div>
+          <div class="job-ckp-box">
+            <div class="job-ckp-val">${job.ckp}</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="sec-block-title">📈 Главная статистика поста (метрика измерения)</div>
+          <div class="job-stat-box">
+            <div class="job-stat-val">${job.stat}</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="sec-block-title">📋 Ключевые обязанности и функции поста</div>
+          <ul class="rep-bullet-list">${dutiesHtml}</ul>
+        </div>
+
+        <div>
+          <div class="sec-block-title">📁 Прикрепленные документы должностной папки</div>
+          <div style="display: flex; flex-direction: column; gap: 6px;">${filesHtml}</div>
+        </div>
+      `;
+    }
+
+    // TAB 5: CATALOG RENDERING
+    function renderCatalog(items) {
+      const tbody = document.getElementById('catalogTableBody');
+      tbody.innerHTML = '';
+
+      items.forEach(item => {
+        const tr = document.createElement('tr');
+        const ext = item.ext.replace('.', '') || 'file';
+
+        let tagsHtml = '';
+        if (item.tags && item.tags.length) {
+          tagsHtml = item.tags.map(t => `<span class="file-tag">#${t}</span>`).join('');
+        }
+
+        tr.innerHTML = `
+          <td>
+            <div style="display: flex; align-items: center;">
+              <span class="file-icon ${ext}">${ext.toUpperCase().slice(0, 4)}</span>
+              <div>
+                <div style="font-weight: 600; color: #fff;">${item.name}</div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">${item.path}</div>
+              </div>
+            </div>
+          </td>
+          <td><span style="font-size: 12px; color: #cbd5e1;">${item.category}</span></td>
+          <td>${tagsHtml}</td>
+          <td style="text-align: right; font-weight: 600; color: var(--text-muted);">${item.size_str}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('catalogStats').textContent = `Показано ${items.length} из ${catalogData.length} файлов`;
+    }
+
+    function filterCatalog() {
+      const query = document.getElementById('catalogSearch').value.toLowerCase().trim();
+      const filtered = catalogData.filter(item => {
+        const matchesQuery = item.name.toLowerCase().includes(query) ||
+                             item.path.toLowerCase().includes(query) ||
+                             (item.tags && item.tags.some(t => t.toLowerCase().includes(query)));
+        
+        const matchesCat = currentCategoryFilter === 'all' || item.path.startsWith(currentCategoryFilter);
+        return matchesQuery && matchesCat;
+      });
+      renderCatalog(filtered);
+    }
+
+    function setCategoryFilter(catPrefix, element) {
+      currentCategoryFilter = catPrefix;
+      document.querySelectorAll('#categoryPills .pill').forEach(p => p.classList.remove('active'));
+      element.classList.add('active');
+      filterCatalog();
+    }
+
+    // INITIALIZATION
     window.addEventListener('DOMContentLoaded', () => {
+      initDashboardCharts();
+      renderReportsList();
+      renderJobsList();
       renderCatalog(catalogData);
-      renderEmployeesList();
     });
   </script>
 </body>
