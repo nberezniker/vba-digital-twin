@@ -1097,6 +1097,254 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
 
     </div>
 
+    
+    <!-- TAB: KPB CALCULATOR & RECONCILIATION -->
+    <div id="tab-kpb" class="tab-content">
+      <div class="kpb-header-banner">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+              <span style="font-size: 24px;">🧮</span>
+              <h2 style="font-size: 18px; font-weight: 800; color: #fff; margin: 0;">Сверка с каноническим калькулятором КПБ («AI Business Constructor 5.0»)</h2>
+              <span class="badge" style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4);">Вылизано на Git (calculatorkpb-app)</span>
+            </div>
+            <p style="font-size: 12px; color: var(--text-muted); margin: 0;">
+              Математическое сопоставление формул финансового ядра <code>Calculator</code>, бенчмарков ниши <code>trade</code> (Торговля) и факта 1С / ING Bank филиала VBA Trade Group (Румыния).
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn-action" onclick="resetKpbToFact()">🔄 Сбросить к факту Октября</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 1: Interactive KPB Unit Economics Simulator -->
+      <div style="margin-bottom: 24px;">
+        <div class="sec-title" style="margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+          <span>⚡ Интерактивный симулятор юнит-экономики (на формулах ядра KPB Calculator)</span>
+          <span style="font-size: 11px; color: var(--text-muted);">Изменяйте параметры — результаты и бенчмарки пересчитываются мгновенно</span>
+        </div>
+
+        <div class="kpb-calc-grid">
+          <!-- Inputs Column -->
+          <div class="kpb-card">
+            <div class="kpb-card-title">📝 ВХОДНЫЕ ПАРАМЕТРЫ (FAST INPUT)</div>
+            
+            <div class="kpb-input-group">
+              <label>Объем продаж в месяц: <strong id="lblQty" style="color: var(--accent);">10 225</strong> шт.</label>
+              <input type="range" id="kpbQty" min="1000" max="30000" step="50" value="10225" oninput="runKpbCalc()">
+            </div>
+
+            <div class="kpb-input-row">
+              <div class="kpb-input-group">
+                <label>Средняя цена продажи (€/шт.)</label>
+                <input type="number" id="kpbPrice" value="9.86" step="0.1" min="1" oninput="runKpbCalc()">
+              </div>
+              <div class="kpb-input-group">
+                <label>Себестоимость COGS (€/шт.)</label>
+                <input type="number" id="kpbCogs" value="8.50" step="0.1" min="1" oninput="runKpbCalc()">
+              </div>
+            </div>
+
+            <div class="kpb-input-row">
+              <div class="kpb-input-group">
+                <label>Бюджет на рекламу (€/мес)</label>
+                <input type="number" id="kpbMktg" value="750" step="50" min="0" oninput="runKpbCalc()">
+              </div>
+              <div class="kpb-input-group">
+                <label>Входящие лиды (шт./мес)</label>
+                <input type="number" id="kpbLeads" value="140" step="5" min="1" oninput="runKpbCalc()">
+              </div>
+            </div>
+
+            <div class="kpb-input-row">
+              <div class="kpb-input-group">
+                <label>Конверсия в оплату (%)</label>
+                <input type="number" id="kpbConv" value="62" step="1" min="1" max="100" oninput="runKpbCalc()">
+              </div>
+              <div class="kpb-input-group">
+                <label>Частота покупок (заказов/год)</label>
+                <input type="number" id="kpbVisits" value="2.5" step="0.1" min="1" oninput="runKpbCalc()">
+              </div>
+            </div>
+
+            <div class="kpb-input-row">
+              <div class="kpb-input-group">
+                <label>ФОТ персонала филиала (€/мес)</label>
+                <input type="number" id="kpbFot" value="2400" step="100" min="0" oninput="runKpbCalc()">
+              </div>
+              <div class="kpb-input-group">
+                <label>Склад Brăila + прочий OpEx (€/мес)</label>
+                <input type="number" id="kpbOpex" value="1480" step="50" min="0" oninput="runKpbCalc()">
+              </div>
+            </div>
+
+            <div class="kpb-input-group">
+              <label>Налоговый режим (Румыния)</label>
+              <select id="kpbTaxRegime" onchange="runKpbCalc()">
+                <option value="16_profit">🇷🇴 Корпоративный налог на прибыль 16% (Impozit pe Profit)</option>
+                <option value="1_revenue">🇷🇴 Микропредприятие 1% с оборота (Microîntreprindere ≤ 500k €)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Calculated Results Column -->
+          <div class="kpb-card">
+            <div class="kpb-card-title">📊 РАСЧЕТ ЮНИТ-ЭКОНОМИКИ И P&L ПО ЯДРУ KPB</div>
+
+            <div class="kpb-kpi-summary">
+              <div class="kpb-mini-kpi">
+                <div class="kpb-mini-lbl">Выручка (Total Revenue)</div>
+                <div class="kpb-mini-val" id="resRev">100 818.50 €</div>
+              </div>
+              <div class="kpb-mini-kpi">
+                <div class="kpb-mini-lbl">Валовая прибыль (Gross Profit)</div>
+                <div class="kpb-mini-val" id="resGross" style="color: var(--success);">13 906.00 €</div>
+              </div>
+              <div class="kpb-mini-kpi">
+                <div class="kpb-mini-lbl">Маржа на 1 мешок</div>
+                <div class="kpb-mini-val" id="resMarginUnit" style="color: var(--purple);">1.36 €/шт.</div>
+              </div>
+              <div class="kpb-mini-kpi">
+                <div class="kpb-mini-lbl">Валовая маржинальность</div>
+                <div class="kpb-mini-val" id="resMarginPct">13.79%</div>
+              </div>
+            </div>
+
+            <!-- Unit Economics Cards -->
+            <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 12px;">
+              <div style="font-size: 11px; font-weight: 700; color: var(--accent); margin-bottom: 8px; text-transform: uppercase;">
+                🎯 Воронка и привлечение (KPB Acquisition Engine)
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                <div>
+                  <div style="font-size: 11px; color: var(--text-muted);">CPL (Цена лида)</div>
+                  <div style="font-size: 15px; font-weight: 700; color: #fff;" id="resCpl">5.36 €</div>
+                </div>
+                <div>
+                  <div style="font-size: 11px; color: var(--text-muted);">CAC (Цена клиента)</div>
+                  <div style="font-size: 15px; font-weight: 700; color: #34d399;" id="resCac">8.64 €</div>
+                  <div class="badge-mini" id="badgeCac">отлично (&lt;20€)</div>
+                </div>
+                <div>
+                  <div style="font-size: 11px; color: var(--text-muted);">ROMI (Отдача)</div>
+                  <div style="font-size: 15px; font-weight: 700; color: #38bdf8;" id="resRomi">1 754%</div>
+                  <div class="badge-mini" id="badgeRomi">отлично (&gt;200%)</div>
+                </div>
+              </div>
+
+              <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                <div>
+                  <div style="font-size: 11px; color: var(--text-muted);">LTV (Жизненная ценность)</div>
+                  <div style="font-size: 15px; font-weight: 700; color: #fff;" id="resLtv">680.00 €</div>
+                </div>
+                <div>
+                  <div style="font-size: 11px; color: var(--text-muted);">LTV / CAC Ratio</div>
+                  <div style="font-size: 15px; font-weight: 700; color: #34d399;" id="resLtvCac">78.7x</div>
+                  <div class="badge-mini" id="badgeLtvCac">отлично (&gt;6x)</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Financial Profitability & Break-even -->
+            <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border); border-radius: 8px; padding: 14px;">
+              <div style="font-size: 11px; font-weight: 700; color: #fbbf24; margin-bottom: 8px; text-transform: uppercase;">
+                ⚖️ Безубыточность и чистая прибыль (P&L Bottomline)
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 10px;">
+                <div>
+                  <div style="font-size: 11px; color: var(--text-muted);">Точка безубыточности (шт.)</div>
+                  <div style="font-size: 16px; font-weight: 700; color: #fbbf24;" id="resBeUnits">3 404 шт./мес</div>
+                  <div style="font-size: 10px; color: var(--text-muted);" id="resBeSafety">Запас прочности: +200% (3.0x)</div>
+                </div>
+                <div>
+                  <div style="font-size: 11px; color: var(--text-muted);">Точка безубыточности (€)</div>
+                  <div style="font-size: 16px; font-weight: 700; color: #fff;" id="resBeRev">33 568 €</div>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05);">
+                <div>
+                  <div style="font-size: 11px; color: var(--text-muted);">OpEx общий</div>
+                  <div style="font-size: 14px; font-weight: 700; color: #f87171;" id="resOpexTotal">4 630 €</div>
+                </div>
+                <div>
+                  <div style="font-size: 11px; color: var(--text-muted);">Налог Румыния</div>
+                  <div style="font-size: 14px; font-weight: 700; color: #cbd5e1;" id="resTax">1 484 €</div>
+                </div>
+                <div>
+                  <div style="font-size: 11px; color: var(--text-muted);">Чистая прибыль</div>
+                  <div style="font-size: 16px; font-weight: 800; color: #34d399;" id="resNetProfit">7 792 €</div>
+                  <div style="font-size: 10px; color: #34d399;" id="resNetMargin">Рентабельность: 7.7%</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Canonical Formula Comparison Table -->
+      <div style="margin-bottom: 24px;">
+        <div class="sec-title" style="margin-bottom: 12px;">
+          📋 Матрица сопоставления: Формулы ядра KPB Calculator vs Фактический учет VBA Trade Group
+        </div>
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+            <thead>
+              <tr style="background: rgba(15, 23, 42, 0.9); border-bottom: 1px solid var(--border); text-align: left;">
+                <th style="padding: 10px 14px; color: var(--accent); width: 18%;">Метрика управления</th>
+                <th style="padding: 10px 14px; color: #fff; width: 28%;">Каноническая формула KPB (Git)</th>
+                <th style="padding: 10px 14px; color: #cbd5e1; width: 30%;">Расчет для VBA (Октябрь 2026 факт)</th>
+                <th style="padding: 10px 14px; color: var(--success); width: 12%;">Бенчмарк Trade</th>
+                <th style="padding: 10px 14px; text-align: center; width: 12%;">Статус</th>
+              </tr>
+            </thead>
+            <tbody id="kpbComparisonTbody">
+              <!-- Populated with rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Section 3: Risk Triggers & Health Check -->
+      <div>
+        <div class="sec-title" style="margin-bottom: 12px;">
+          🛡️ Диагностика риск-триггеров предприятия (KPB System Risk Triggers)
+        </div>
+        <div class="kpb-risk-grid">
+          <div class="kpb-risk-card safe">
+            <div class="kpb-risk-icon">✅</div>
+            <div>
+              <div class="kpb-risk-title">Триггер Net Profit &lt; 0 (Убыток / Burn Rate)</div>
+              <div class="kpb-risk-desc">Чистая прибыль составляет +7 765.38 €/мес (7.7% рентабельности). Бизнес генерирует устойчивый денежный поток.</div>
+            </div>
+          </div>
+          <div class="kpb-risk-card safe">
+            <div class="kpb-risk-icon">✅</div>
+            <div>
+              <div class="kpb-risk-title">Триггер LTV/CAC &lt; 3 (Неэффективный маркетинг)</div>
+              <div class="kpb-risk-desc">Фактическое соотношение LTV/CAC = 78.7x. Превышает порог отсечки более чем в 26 раз за счет B2B-повторов.</div>
+            </div>
+          </div>
+          <div class="kpb-risk-card safe">
+            <div class="kpb-risk-icon">✅</div>
+            <div>
+              <div class="kpb-risk-title">Триггер FOT Ratio &gt; 30% (Перегрузка фонда зарплат)</div>
+              <div class="kpb-risk-desc">ФОТ филиала (2 400 €) составляет всего 2.38% от выручки. Организационная структура предельно компактна.</div>
+            </div>
+          </div>
+          <div class="kpb-risk-card safe">
+            <div class="kpb-risk-icon">✅</div>
+            <div>
+              <div class="kpb-risk-title">Триггер Gross Margin &lt; 10% (Критическое падение наценки)</div>
+              <div class="kpb-risk-desc">Средняя маржа составляет 13.76% (опт) и до 31.6% (розница). Ни один сегмент не опускается ниже 11.2%.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- TAB 2: 8 OFFICIAL REPORTS -->
     <div id="tab-reports" class="tab-content">
       <div class="reports-layout">
