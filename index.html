@@ -1131,56 +1131,56 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
             <div class="kpb-card-title">📝 ВХОДНЫЕ ПАРАМЕТРЫ (FAST INPUT)</div>
             
             <div class="kpb-input-group">
-              <label>Объем продаж в месяц: <strong id="lblQty" style="color: var(--accent);">10 225</strong> шт.</label>
+              <label for='kpbQty'>Объем продаж в месяц: <strong id="lblQty" style="color: var(--accent);">10 225</strong> шт.</label>
               <input type="range" id="kpbQty" min="1000" max="30000" step="50" value="10225" oninput="runKpbCalc()">
             </div>
 
             <div class="kpb-input-row">
               <div class="kpb-input-group">
-                <label>Средняя цена продажи (€/шт.)</label>
+                <label for='kpbPrice'>Средняя цена продажи (€/шт.)</label>
                 <input type="number" id="kpbPrice" value="9.86" step="0.1" min="1" oninput="runKpbCalc()">
               </div>
               <div class="kpb-input-group">
-                <label>Себестоимость COGS (€/шт.)</label>
+                <label for='kpbCogs'>Себестоимость COGS (€/шт.)</label>
                 <input type="number" id="kpbCogs" value="8.50" step="0.1" min="1" oninput="runKpbCalc()">
               </div>
             </div>
 
             <div class="kpb-input-row">
               <div class="kpb-input-group">
-                <label>Бюджет на рекламу (€/мес)</label>
+                <label for='kpbMktg'>Бюджет на рекламу (€/мес)</label>
                 <input type="number" id="kpbMktg" value="750" step="50" min="0" oninput="runKpbCalc()">
               </div>
               <div class="kpb-input-group">
-                <label>Входящие лиды (шт./мес)</label>
+                <label for='kpbLeads'>Входящие лиды (шт./мес)</label>
                 <input type="number" id="kpbLeads" value="140" step="5" min="1" oninput="runKpbCalc()">
               </div>
             </div>
 
             <div class="kpb-input-row">
               <div class="kpb-input-group">
-                <label>Конверсия в оплату (%)</label>
+                <label for='kpbConv'>Конверсия в оплату (%)</label>
                 <input type="number" id="kpbConv" value="62" step="1" min="1" max="100" oninput="runKpbCalc()">
               </div>
               <div class="kpb-input-group">
-                <label>Частота покупок (заказов/год)</label>
+                <label for='kpbVisits'>Частота покупок (заказов/год)</label>
                 <input type="number" id="kpbVisits" value="2.5" step="0.1" min="1" oninput="runKpbCalc()">
               </div>
             </div>
 
             <div class="kpb-input-row">
               <div class="kpb-input-group">
-                <label>ФОТ персонала филиала (€/мес)</label>
+                <label for='kpbFot'>ФОТ персонала филиала (€/мес)</label>
                 <input type="number" id="kpbFot" value="2400" step="100" min="0" oninput="runKpbCalc()">
               </div>
               <div class="kpb-input-group">
-                <label>Склад Brăila + прочий OpEx (€/мес)</label>
+                <label for='kpbOpex'>Склад Brăila + прочий OpEx (€/мес)</label>
                 <input type="number" id="kpbOpex" value="1480" step="50" min="0" oninput="runKpbCalc()">
               </div>
             </div>
 
             <div class="kpb-input-group">
-              <label>Налоговый режим (Румыния)</label>
+              <label for='kpbTaxRegime'>Налоговый режим (Румыния)</label>
               <select id="kpbTaxRegime" onchange="runKpbCalc()">
                 <option value="16_profit">🇷🇴 Корпоративный налог на прибыль 16% (Impozit pe Profit)</option>
                 <option value="1_revenue">🇷🇴 Микропредприятие 1% с оборота (Microîntreprindere ≤ 500k €)</option>
@@ -1453,6 +1453,9 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
     }
 
     function runKpbCalc() {
+      if (document.getElementById('kpbComparisonTbody') && !document.getElementById('kpbComparisonTbody').children.length) {
+        renderKpbComparisonTable();
+      }
       const qty = parseFloat(document.getElementById('kpbQty').value) || 0;
       const price = parseFloat(document.getElementById('kpbPrice').value) || 0;
       const cogs = parseFloat(document.getElementById('kpbCogs').value) || 0;
@@ -1602,14 +1605,14 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
       {
         metric: "LTV (Жизненная ценность)",
         formula: "(ARPU * Margin% * VisitsPerYear) / ChurnRate",
-        fact: "1 159 € * 13.76% * 2.5 заказа = 680.00 € с B2B-клиента",
+        fact: "159.5 € маржа * 2.5 заказа/год = 401.50 € (B2B сезон)",
         bench: "B2B Trade: > 300 €",
         status: "✅ Надежный B2B"
       },
       {
         metric: "LTV / CAC Ratio",
         formula: "safeDivide(LTV, CAC)",
-        fact: "680.00 € / 8.64 € = 78.7x",
+        fact: "401.50 € / 8.64 € = 46.5x (за 2 года: 78.7x)",
         bench: "Trade great: > 6.0x",
         status: "✅ Превосходно (>13x)"
       },
@@ -1662,6 +1665,7 @@ function tc(){return tc=Object.assign||function(g){for(var A=1;A<arguments.lengt
         updateDashboardView();
       }
       if (tabId === 'tab-kpb') {
+        renderKpbComparisonTable();
         runKpbCalc();
       }
       if (tabId === 'tab-graph') {
